@@ -1,272 +1,365 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Harsh Vivek Londhekar Portfolio</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harsh Londhekar | Portfolio</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="is-preload">
-
-    <!-- Wrapper -->
-    <div id="wrapper" class="fade-in">
-
-        <!-- Intro -->
-        <div id="intro">
-            <h1>Harsh Vivek Londhekar</h1>
-            <p>CS Grad student at Stony Brook University <br> Software engineer | Software QA Engineer | Performance Engineer</p>
-            <ul class="actions">
-                <li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
-            </ul>
-        </div>
-
-        <!-- Header -->
-        <header id="header">
-            <a href="index.html" class="logo">My Portfolio</a>
-        </header>
-
-        <!-- Nav -->
-        <nav id="nav">
-            <ul class="links">
-                <li class="active"><a href="index.html">About Me</a></li>
-            </ul>
-            <ul class="icons">
-                <li><a href="https://www.linkedin.com/in/harshlondhekar/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
-                <li><a href="https://github.com/Harsh4601" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-            </ul>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">HL</div>
+            <div class="nav-links">
+                <a href="#home" class="nav-item">Home</a>
+                <a href="#about" class="nav-item">About</a>
+                <a href="#experience" class="nav-item">Experience</a>
+                <a href="#skills" class="nav-item">Skills</a>
+                <a href="#projects" class="nav-item">Projects</a>
+                <a href="#contact" class="nav-item">Contact</a>
+            </div>
         </nav>
+    </header>
 
-      
-
-        <!-- Main -->
-        <div id="main">
-
-              <!-- Featured Post -->
-							<article class="post featured">
-								<header class="major">
-									<h2>Summary</h2>
-									<p>I'm Harsh Vivek Londhekar, a software engineer with a solid foundation in computer science, currently pursuing my Master's at Stony Brook University. I have experience as a Software Engineer at Enphase Energy, where I improved QA performance testing with automation. Additionally, I interned as an iOS App Developer at Hectra Services Pvt Ltd.
-
-                                        I am skilled in C++, Python, SQL, Java, Swift, AWS, Kubernetes, Jenkins, and Firebase. My projects include a Driver Drowsiness Detection System and software modeling tools. I'm eager to connect for collaborations in software engineering.</p>
-								</header>
-								<a class="image main"><img src="images/IMG_4499.png" alt="" /></a>
-
-							</article>
-                            <style>
-                                .image.main img {
-                                    width: 60%; 
-                                    height: auto; 
-                                    display: block;
-                                    margin: 0 auto; 
-                                }
-                            </style>
-
-            <!-- Education -->
-            <section id="education">
-                <header class="major">
-                    <h2>Education 🎓</h2>
-                </header>
-                <div class="content">
-                    <h3>Stony Brook University, New York</h3>
-                    <p>Master of Science in Computer Science (August 2024 - May 2026)</p>
-                    <h3>Vellore Institute of Technology, Vellore, India</h3>
-                    <p>Bachelor of Technology in Computer Science and Engineering (CGPA: 8.82/10.0) (July 2019 - April 2023)</p>
+    <main>
+        <section id="home" class="hero">
+            <div class="container fade-in">
+                <h1 class="animate-text">Harsh Vivek Londhekar</h1>
+                <h2 class="animate-text-delay">Software Engineer</h2>
+                <p class="animate-text-delay-more">Building intuitive and performant solutions</p>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn primary">View Projects</a>
+                    <a href="#contact" class="btn secondary">Contact Me</a>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Experience -->
-            <section id="experience">
-                <header class="major">
-                    <h2>Experience 💼</h2>
-                </header>
-                <div class="content">
-                    <h3>Enphase Energy, Bengaluru, India</h3>
-                    <p><b>Associate Software Engineer (QA Performance Testing) (July 2023 - August 2024)</b></p>
-                    <ul>
-                        <li>Responsible for load testing Enlighten applications in the pre-production environment, maintaining test data and JMX scripts; Improved performance test coverage
-                            by scripting JMX files by over 75%.</li>
-                        <li>Developed code for fetching API resources from Datadog into SQL table and displaying the same in Grafana dashboard which was used for analysing weekly
-                            performance load tests.</li>
-                        <li>Analyzed weekly test results and production behaviour, filed critical gating bugs to prevent issues from reaching production, and assisted developers in
-                            troubleshooting performance degradation by monitoring Datadog APM services, MongoDB clusters, RDS, DynamoDB and top SQL queries.</li>
-                        <li>Scripted and executed over 30 load-testing scenarios for new microservices, establishing robust Jenkins pipelines to automate testing; reduced the average testing
-                            cycle time by 40%, enhancing deployment efficiency.</li>
-
-
-                    </ul>
-                    <h3>Enphase Energy, Bengaluru, India</h3>
-                    <p><b>Software Engineer, Intern (QA Performance Testing) (Jan 2023 - June 2023)</b></p>
-                    <ul>
-                        <li>Developed a release tracker dashboard using the Django rest framework, to track defects based on source and type filed by the QA team. This helped track and
-                            maintain defect counts per sprint, integrating data from Jira.</li>
-                        <li>Automated UI workflows for test data creation using Python and Selenium, simulating user actions such as activating accounts, setting up new sites, resetting
-                            accounts, and assigning users to specific sites. The automation reduced the time spent on manual tasks by 90%, cutting hours of work for creating and activating
-                            sites down to just a few minutes, and provided the performance team with the necessary data for load testing.</li>
-                        <li>Developed Python scripts to automate Jira ticket filing, reducing manual task time by 85%, from several hours to just 10-15 minutes, and decreasing human error.</li>
-
-
-                    </ul>
-                    <h3>Hectra Services Pvt Ltd (Cleanxy), Delhi IN</h3>
-                    <p><b>iOS App Developer, Intern (May 2021 - October 2021)</b></p>
-                    <ul>
-                        <li>Implemented the front-end design of the application using a Storyboard framework.</li>
-                        <li>Integrated the iOS mobile application with the backend services using Google Firebase, for storing user profile data.</li>
-                        <li>Incorporated Google Maps SDK service into the mobile app, enabling precise location-based services that increased user engagement by 25%.</li>
-                        <li>Collaborated closely with design, backend, web, and Android teams, leading key decisions on front-end design and functionality, resulting in a 20% improvement
-                            in cross-platform consistency.</li>
-                    </ul>
-
-                    
+        <section id="about" class="about">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <div class="about-image">
+                        <div class="image-container">
+                            <img src="IMG_4499.png" alt="Harsh Londhekar">
+                        </div>
+                    </div>
+                    <div class="about-text">
+                        <p>I'm a Computer Science graduate student at Stony Brook University with professional experience in software engineering, specializing in performance testing, automation, and full-stack development.</p>
+                        <p>My technical journey spans from building distributed systems and iOS applications to creating automated testing frameworks and performance optimization solutions.</p>
+                        <div class="personal-info">
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Stony Brook, NY</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>harsh.londhekar@stonybrook.edu</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-phone"></i>
+                                <span>+1 631-428-8358</span>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <a href="https://linkedin.com/in/harshlondhekar" target="_blank" class="social-link">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://github.com/Harsh4601" target="_blank" class="social-link">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Projects -->
-            <section id="projects">
-                <header class="major">
-                    <h2>Projects 📚</h2>
-                </header>
-                <div class="content">
-                    <h3><a href="https://github.com/Harsh4601/Paxos_2pc"><u>Banking System Using Modified Paxos and Two-Phase Commit Protocols</u></a></h3>
-                    <ul>
-                        <li>Developed a fault-tolerant distributed banking application in Go, supporting intra-shard and cross-shard transactions using Modified Paxos Protocol for consensus
-                            and Two-Phase Commit Protocol for coordination.</li>
-                        <li>Designed a sharded architecture with data partitioned across clusters, ensuring fault tolerance through replication and handling fail-stop server failures, utilizing
-                            SQLite as the key-value database.</li>
-                        <li>Implemented a lock-based mechanism for transaction consistency, leveraging net-rpc for inter-server communication and ensuring proper handling of transaction
-                            aborts. Optimized performance by measuring throughput and latency, processing transactions efficiently across a dataset of 3000 items.</li>
-                        <li>Ensured scalability by supporting configurable cluster sizes and shard redistribution to minimize cross-shard overhead.</li>
-
-                    </ul>
-                    <h3><a href="https://github.com/Harsh4601/flexinotify"><u>Context-Aware Notification Management System for Smartphones</u></a></h3>
-                    <ul>
-                        <li>Developed a context-aware notification management system leveraging real-time sensor data (GPS, accelerometer, gyroscope, and ambient light) to dynamically
-                            manage smartphone notifications based on user context and activity.</li>
-                        <li>Implemented intelligent notification filtering and adaptive user interfaces, prioritizing critical alerts while batching non-essential notifications, enhancing user
-                            productivity and reducing information overload.</li>
-                        <li>Integrated advanced machine learning algorithms and self-learning behavior, enabling the system to evolve with user feedback for personalized notification
-                            management and improved usability.</li>
-                        <li>Optimized battery efficiency through adaptive sensing strategies, minimizing sensor usage during low-interaction scenarios while ensuring robust performance
-                            across diverse environments.</li>
-                        <li>Achieved 92% accuracy in indoor/outdoor detection and 95% reliability in activity recognition, demonstrating the system's effectiveness in real-world scenarios.</li>
-
-                    </ul>
-                    <h3><a href="https://github.com/Harsh4601/pbft"><u>Distributed Banking Application with Linear PBFT Consensus Protocol</u></a> </h3>
-                    <ul>
-                        <li>Designed and implemented a banking system using the Practical Byzantine Fault Tolerance (PBFT) protocol, ensuring consensus and fault tolerance across 3f+1
-                            nodes with up to f Byzantine failures.</li>
-                        <li>Reduced communication complexity from quadratic to linear by implementing a Linear PBFT variant, enhancing scalability and efficiency in distributed systems.</li>
-                        <li>Simulated Byzantine fault scenarios, including leader failures and view-change mechanisms, to validate system reliability.</li>
-                        <li>Developed transaction logging, state reset, and real-time status tracking (e.g., pre-prepared, prepared, committed, executed) for seamless distributed processing.</li>
-
-                    </ul>
-                    <h3><a href = "https://github.com/Harsh4601/Driver_Drowsiness_Detection_System"><u>Drowsiness Detection System</u></a></h3>
-                    <ul>
-                        <li>Devised a driver drowsiness detection system that uses eye aspect ratio, yawn detection, and pulse rate monitoring, achieving 92% accuracy in identifying and
-                            alerting drowsy drivers.</li>
-                        <li>Developed code for the pulse sensor using Arduino IDE.</li>
-                        <li>Configured ThingSpeak to serve as a central monitoring system, integrating it with the hardware and code scripts.</li>
-                    </ul>
-                    <h3> <a href="https://github.com/Harsh4601/SoftwareModellingTool"><u>Software Modelling Tool</u></a></h3>
-                    <ul>
-                        <li>Worked on developing software modelling tool as part of “Software engineering” course.</li>
-                        <li>Developed the colour palette functionality in the tool.</li>
-                        <li>Implemented drag-and-drop functionality and drawing basic shapes like squares, rectangles, circles, and arrows on the canvas.</li>
-                        <li>Utilized Java GUI and libraries such as Javax.swing and Java AWT for creating DB model diagrams, flowcharts, and fishbone diagrams.</li>
-                    </ul>
-                    <h3>ADG Connect</h3>
-                    <ul>
-                        <li>Collaborated with the ADG chapter team to develop a mobile application for internal communication among club members, which is actively used by the entire
-                            ADG chapter.</li>
-                        <li>Developed the front end of the iOS application using the Story Board framework, including the 'About Us', 'Notifications', and 'M.O.M’ screens.</li>
-                        <li>Implemented backend functionality for these screens using Google Firebase.</li>
-                    </ul>
+        <section id="education" class="education">
+            <div class="container">
+                <h2 class="section-title">Education</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="education-header">
+                                <img src="sbu.svg.png" alt="Stony Brook University Logo" class="university-logo">
+                                <div>
+                                    <h3>Master of Science in Computer Science</h3>
+                                    <h4>Stony Brook University, New York</h4>
+                                </div>
+                            </div>
+                            <p class="timeline-date">August 2024 – May 2026</p>
+                            <p>Coursework: Distributed Systems, Visualization, Wireless and Mobile Networks</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="education-header">
+                                <img src="vit.svg.png" alt="VIT Logo" class="university-logo">
+                                <div>
+                                    <h3>Bachelor of Technology in Computer Science and Engineering</h3>
+                                    <h4>Vellore Institute of Technology, Vellore, India</h4>
+                                </div>
+                            </div>
+                            <p class="timeline-date">July 2019 – April 2023 | GPA: 8.82/10.0</p>
+                            <p>Coursework: Deep Learning, Natural Language Processing, Database Management Systems, Artificial Intelligence, Operating Systems</p>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Skills -->
-            <section id="skills">
-                <header class="major">
-                    <h2>Technical Skills ⚙️</h2>
-                </header>
-                <div class="content">
-                    <ul>
-                        <li><b>Programming and Development:</b> C++, Python, SQL, Golang, Swift, HTML, CSS, JavaScript, iOS development, Problem-solving skills, Software quality, Test
-                            Automation, Performance optimization, Design Test Plan, Django, Data structures, Distributed Systems, Sensor Integration, Systems programming</li>
-                        <li><b>Database and Cloud Technologies:</b>SQLite, MongoDB, AWS, CloudWatch, Cloud computing, Google Firebase, SQS, Kafka, docker</li>
-                        <li><b>DevOps and Automation Tools:</b>Net-RPC, Git, Bash, JUnit, Version control, Jenkins, CI/CD, Kubernetes, Selenium, JMeter, BlazeMeter, TestRail, Grafana,
-                            Datadog, Jira, Load balancing </li>
-                    </ul>
+        <section id="skills" class="skills">
+            <div class="container">
+                <h2 class="section-title">Technical Skills</h2>
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h3>Programming & Development</h3>
+                        <div class="skill-items">
+                            <span class="skill-item"><i class="fas fa-code skill-icon"></i>C++</span>
+                            <span class="skill-item"><i class="fab fa-python skill-icon"></i>Python</span>
+                            <span class="skill-item"><i class="fas fa-database skill-icon"></i>SQL</span>
+                            <span class="skill-item"><i class="fab fa-golang skill-icon"></i>Golang</span>
+                            <span class="skill-item"><i class="fab fa-swift skill-icon"></i>Swift</span>
+                            <span class="skill-item"><i class="fab fa-html5 skill-icon"></i>HTML/CSS</span>
+                            <span class="skill-item"><i class="fab fa-js skill-icon"></i>JavaScript</span>
+                            <span class="skill-item"><i class="fab fa-apple skill-icon"></i>iOS Development</span>
+                            <span class="skill-item"><i class="fab fa-python skill-icon"></i>Django</span>
+                            <span class="skill-item"><i class="fas fa-network-wired skill-icon"></i>Distributed Systems</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Database & Cloud</h3>
+                        <div class="skill-items">
+                            <span class="skill-item"><i class="fas fa-database skill-icon"></i>SQLite</span>
+                            <span class="skill-item"><i class="fas fa-leaf skill-icon"></i>MongoDB</span>
+                            <span class="skill-item"><i class="fab fa-aws skill-icon"></i>AWS</span>
+                            <span class="skill-item"><i class="far fa-clock skill-icon"></i>CloudWatch</span>
+                            <span class="skill-item"><i class="fas fa-fire skill-icon"></i>Google Firebase</span>
+                            <span class="skill-item"><i class="fas fa-database skill-icon"></i>S3</span>
+                            <span class="skill-item"><i class="fas fa-exchange-alt skill-icon"></i>SQS</span>
+                            <span class="skill-item"><i class="fas fa-stream skill-icon"></i>Kafka</span>
+                            <span class="skill-item"><i class="fab fa-docker skill-icon"></i>Docker</span>
+                            <span class="skill-item"><i class="fas fa-database skill-icon"></i>Redis</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>DevOps & Automation</h3>
+                        <div class="skill-items">
+                            <span class="skill-item"><i class="fab fa-git-alt skill-icon"></i>Git</span>
+                            <span class="skill-item"><i class="fab fa-jenkins skill-icon"></i>Jenkins</span>
+                            <span class="skill-item"><i class="fas fa-sync-alt skill-icon"></i>CI/CD</span>
+                            <span class="skill-item"><i class="fas fa-dharmachakra skill-icon"></i>Kubernetes</span>
+                            <span class="skill-item"><i class="fas fa-vial skill-icon"></i>Selenium</span>
+                            <span class="skill-item"><i class="fas fa-tachometer-alt skill-icon"></i>JMeter</span>
+                            <span class="skill-item"><i class="fas fa-chart-line skill-icon"></i>Grafana</span>
+                            <span class="skill-item"><i class="fas fa-paw skill-icon"></i>Datadog</span>
+                            <span class="skill-item"><i class="fab fa-jira skill-icon"></i>Jira</span>
+                            <span class="skill-item"><i class="fas fa-balance-scale skill-icon"></i>Load Balancing</span>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            
-            <!-- Certifications & Achievements -->
-            <section id="certifications">
-                <header class="major">
-                    <h2>Certifications & Achievements 🙌🏻</h2>
-                </header>
-                <div class="content">
-                    <ul>
-                        <li>iOS 13 and Swift 5 - complete iOS App Development Bootcamp – Udemy (August 2021)</li>
-                        <li>Microsoft Technology Associate Certificate for Programming in Python (January 2020)</li>
-                        <li>Best Business Acumen and Commercial Intelligence in “HelloWorld4.0”, hackathon conducted in Tech Fest “Gravitas 2020” (October 2020)</li>
-                        <li>Flutter Development Bootcamp with Dart – Udemy (September 2020)</li>
-                        <li>Secured III prize with grade A in “STAT-A-THON-WS-2020” (June 2020)</li>
-                        <li>Digital Systems: From Logic Gates to Processors – Coursera (April 2020)</li>
-
-                    </ul>
+        <section id="experience" class="experience">
+            <div class="container">
+                <h2 class="section-title">Professional Experience</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Associate Software Engineer – QA Performance Testing</h3>
+                            <h4>Enphase Energy | Bengaluru, India</h4>
+                            <p class="timeline-date">July 2023 – August 2024</p>
+                            <ul class="achievement-list">
+                                <li>Improved performance test coverage by scripting JMX files (75%+ increase)</li>
+                                <li>Developed APIs to SQL → Grafana dashboard data pipeline</li>
+                                <li>Filed critical gating bugs preventing production issues</li>
+                                <li>Automated 30+ load-testing scenarios with Jenkins (reduced testing time by 40%)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Software Engineer Intern – QA Performance Testing</h3>
+                            <h4>Enphase Energy | Bengaluru, India</h4>
+                            <p class="timeline-date">January 2023 – June 2023</p>
+                            <ul class="achievement-list">
+                                <li>Built Django REST Framework release tracker dashboard (Jira integration)</li>
+                                <li>Automated UI workflows (Python + Selenium) reducing manual effort by 90%</li>
+                                <li>Automated Jira ticket filing (85% time reduction)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>iOS App Developer Intern</h3>
+                            <h4>Hectra Services Pvt Ltd | New Delhi, India</h4>
+                            <p class="timeline-date">May 2021 – October 2021</p>
+                            <ul class="achievement-list">
+                                <li>Developed front-end using Storyboard</li>
+                                <li>Integrated backend services using Google Firebase</li>
+                                <li>Added Google Maps SDK increasing user engagement by 25%</li>
+                                <li>Led front-end design improvements enhancing cross-platform consistency by 20%</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
+        <section id="projects" class="projects">
+            <div class="container">
+                <h2 class="section-title">Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Banking System Project">
+                        </div>
+                        <div class="project-content">
+                            <h3>Banking System Using Modified Paxos and Two-Phase Commit Protocols</h3>
+                            <p class="project-date">November 2024 – December 2024</p>
+                            <p>Built a distributed fault-tolerant banking system in Golang using Paxos for consensus and Two-Phase Commit for coordination. Optimized throughput and latency for 3000-item datasets.</p>
+                            <div class="project-tags">
+                                <span class="tag">Golang</span>
+                                <span class="tag">Distributed Systems</span>
+                                <span class="tag">Paxos</span>
+                                <span class="tag">Two-Phase Commit</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Notification Management System">
+                        </div>
+                        <div class="project-content">
+                            <h3>Context-Aware Notification Management System for Smartphones</h3>
+                            <p class="project-date">September 2024 – December 2024</p>
+                            <p>Real-time sensor-based notification filtering system with 92% accuracy for indoor/outdoor detection and 95% reliability for activity recognition. Adaptive, ML-based, battery-optimized system.</p>
+                            <div class="project-tags">
+                                <span class="tag">Machine Learning</span>
+                                <span class="tag">Mobile Development</span>
+                                <span class="tag">Sensors</span>
+                                <span class="tag">Context-Aware Computing</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Software Modeling Tool">
+                        </div>
+                        <div class="project-content">
+                            <h3>Software Modeling Tool</h3>
+                            <p class="project-date">January 2021 – June 2021</p>
+                            <p>Multi-diagram software development tool with drag-and-drop UI for flowcharts, database diagrams, and fishbone diagrams. Achieved 30%+ time savings and cross-platform compatibility.</p>
+                            <div class="project-tags">
+                                <span class="tag">UI/UX</span>
+                                <span class="tag">Software Development</span>
+                                <span class="tag">Drag-and-Drop</span>
+                                <span class="tag">Cross-Platform</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title">Contact Me</h2>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h3>Email</h3>
+                                <p>harsh.londhekar@stonybrook.edu</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h3>Phone</h3>
+                                <p>+1 631-428-8358</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h3>Location</h3>
+                                <p>Stony Brook, NY</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-linkedin"></i>
+                            <div>
+                                <h3>LinkedIn</h3>
+                                <p><a href="https://linkedin.com/in/harshlondhekar" target="_blank">linkedin.com/in/harshlondhekar</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-github"></i>
+                            <div>
+                                <h3>GitHub</h3>
+                                <p><a href="https://github.com/Harsh4601" target="_blank">github.com/Harsh4601</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Harsh VivekLondhekar. All rights reserved.</p>
         </div>
+    </footer>
 
-        <!-- Footer -->
-        <footer id="footer">
-            <section class="split contact">
-                <section class="alt">
-                    <h3>Address</h3>
-                    <p>700 Health Sciences Drive, Stony Brook, NY 11794</p>
-                </section>
-                <section>
-                    <h3>Phone</h3>
-                    <p><a>(+1) 6314288358</a></p>
-                </section>
-                <section>
-                    <h3>Email</h3>
-                    <p><a href="mailto:harsh.londhekar@stonybrook.edu">harsh.londhekar@stonybrook.edu</a></p>
-                </section>
-                <section>
-                    <h3>Resume</h3>
-                    <ul class="icons alt">
-                        <li><a href="https://drive.google.com/file/d/1ITQs32ntpMX7vRqK8oirksMnEQuzEuJv/view?usp=drive_link">Download Resume</a></li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Social</h3>
-                    <ul class="icons alt">
-                        <li><a href="https://www.linkedin.com/in/harshlondhekar/" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
-                        <li><a href="https://github.com/Harsh4601" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-                    </ul>
-                </section>
-            </section>
-        </footer>
+    <script src="scripts/main.js"></script>
 
-        <!-- Copyright -->
-        <div id="copyright">
-            <ul><li>&copy; Harsh Vivek Londhekar</li></ul>
-        </div>
+    <style>
+    /* Add to your existing CSS styles */
+    .education-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
 
-    </div>
+    .university-logo {
+        width: 60px;
+        height: 60px;
+        margin-right: 15px;
+        object-fit: contain;
+    }
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.scrollex.min.js"></script>
-    <script src="assets/js/jquery.scrolly.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
+    .skill-icon {
+        margin-right: 8px;
+        font-size: 16px;
+        width: 20px;
+        text-align: center;
+    }
 
+    .skill-item {
+        display: flex;
+        align-items: center;
+    }
+    </style>
 </body>
-</html>
+</html> 
