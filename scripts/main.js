@@ -4,11 +4,24 @@ document.addEventListener('DOMContentLoaded', () => {
     starsContainer.id = 'stars-container';
     document.body.insertBefore(starsContainer, document.body.firstChild);
     
+    // Create SVG canvas for constellation lines
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svgCanvas = document.createElementNS(svgNS, "svg");
+    svgCanvas.id = 'constellation-canvas';
+    svgCanvas.style.position = 'fixed';
+    svgCanvas.style.top = '0';
+    svgCanvas.style.left = '0';
+    svgCanvas.style.width = '100%';
+    svgCanvas.style.height = '100%';
+    svgCanvas.style.pointerEvents = 'none';
+    svgCanvas.style.zIndex = '1';
+    document.body.insertBefore(svgCanvas, document.body.firstChild);
+    
     // Generate stars with scroll-based movement
     const stars = [];
     
     function createStars() {
-        const numberOfStars = 60;
+        const numberOfStars = 120;
         
         for (let i = 0; i < numberOfStars; i++) {
             const star = document.createElement('div');
@@ -31,7 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 element: star,
                 initialY: y,
                 speed: speed,
-                translateY: 0 // Track Y position directly instead of parsing
+                translateY: 0, // Track Y position directly instead of parsing
+                x: x, // Store percentage position
+                y: y
             });
             
             starsContainer.appendChild(star);
@@ -82,10 +97,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let mouseY = 0;
     let currentX = 0;
     let currentY = 0;
+    let mousePixelX = 0;
+    let mousePixelY = 0;
     
     document.addEventListener('mousemove', (e) => {
         mouseX = (e.clientX / window.innerWidth) * 100;
         mouseY = (e.clientY / window.innerHeight) * 100;
+        mousePixelX = e.clientX;
+        mousePixelY = e.clientY;
         
         // Add active class when mouse is detected
         if (!document.body.classList.contains('mouse-active')) {
@@ -93,7 +112,97 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Smooth animation for the background effect
+    // Constellation drawing function
+    function drawConstellation() {
+        // Clear existing lines
+        while (svgCanvas.firstChild) {
+            svgCanvas.removeChild(svgCanvas.firstChild);
+        }
+        
+        const maxDistance = 150; // Maximum distance for connection (in pixels)
+        const lineOpacityBase = 0.5;
+        
+        stars.forEach(star => {
+            // Get the current position of the star element
+            const rect = star.element.getBoundingClientRect();
+            const starX = rect.left + rect.width / 2;
+            const starY = rect.top + rect.height / 2;
+            
+            // Calculate distance from mouse to star
+            const dx = mousePixelX - starX;
+            const dy = mousePixelY - starY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            // If star is within range, draw a line to the mouse
+            if (distance < maxDistance) {
+                const line = document.createElementNS(svgNS, 'line');
+                line.setAttribute('x1', starX);
+                line.setAttribute('y1', starY);
+                line.setAttribute('x2', mousePixelX);
+                line.setAttribute('y2', mousePixelY);
+                
+                // Calculate opacity based on distance (closer = more opaque)
+                const opacity = (1 - distance / maxDistance) * lineOpacityBase;
+                line.setAttribute('stroke', `rgba(147, 197, 253, ${opacity})`);
+                line.setAttribute('stroke-width', '1');
+                
+                svgCanvas.appendChild(line);
+                
+                // Add glow effect to the star
+                star.element.style.boxShadow = `0 0 ${10 - distance / maxDistance * 5}px rgba(147, 197, 253, 0.8)`;
+            } else {
+                // Remove glow when not connected
+                star.element.style.boxShadow = 'none';
+            }
+        });
+        
+        // Also connect nearby stars to each other for a more constellation-like effect
+        const starConnectDistance = 100; // Distance to connect stars to each other
+        for (let i = 0; i < stars.length; i++) {
+            for (let j = i + 1; j < stars.length; j++) {
+                const rect1 = stars[i].element.getBoundingClientRect();
+                const rect2 = stars[j].element.getBoundingClientRect();
+                
+                const star1X = rect1.left + rect1.width / 2;
+                const star1Y = rect1.top + rect1.height / 2;
+                const star2X = rect2.left + rect2.width / 2;
+                const star2Y = rect2.top + rect2.height / 2;
+                
+                // Check if both stars are near the mouse
+                const dist1ToMouse = Math.sqrt(
+                    Math.pow(mousePixelX - star1X, 2) + 
+                    Math.pow(mousePixelY - star1Y, 2)
+                );
+                const dist2ToMouse = Math.sqrt(
+                    Math.pow(mousePixelX - star2X, 2) + 
+                    Math.pow(mousePixelY - star2Y, 2)
+                );
+                
+                // Only connect stars if both are near the mouse
+                if (dist1ToMouse < maxDistance && dist2ToMouse < maxDistance) {
+                    const dx = star2X - star1X;
+                    const dy = star2Y - star1Y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < starConnectDistance) {
+                        const line = document.createElementNS(svgNS, 'line');
+                        line.setAttribute('x1', star1X);
+                        line.setAttribute('y1', star1Y);
+                        line.setAttribute('x2', star2X);
+                        line.setAttribute('y2', star2Y);
+                        
+                        const opacity = (1 - distance / starConnectDistance) * 0.3;
+                        line.setAttribute('stroke', `rgba(147, 197, 253, ${opacity})`);
+                        line.setAttribute('stroke-width', '0.5');
+                        
+                        svgCanvas.appendChild(line);
+                    }
+                }
+            }
+        }
+    }
+    
+    // Smooth animation for the background effect and constellation
     function animate() {
         // Smooth interpolation for natural movement
         const speed = 0.15;
@@ -102,6 +211,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         document.body.style.setProperty('--mouse-x', `${currentX}%`);
         document.body.style.setProperty('--mouse-y', `${currentY}%`);
+        
+        // Draw constellation lines
+        drawConstellation();
         
         requestAnimationFrame(animate);
     }
