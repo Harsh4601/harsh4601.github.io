@@ -313,4 +313,58 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Trigger the animation after a short delay
     setTimeout(animateTitle, 500);
+    
+    // Projects horizontal scroll with arrow buttons
+    const projectsGrid = document.querySelector('.projects-grid');
+    const scrollLeftBtn = document.getElementById('scrollLeft');
+    const scrollRightBtn = document.getElementById('scrollRight');
+    
+    if (projectsGrid && scrollLeftBtn && scrollRightBtn) {
+        // Function to update arrow visibility based on scroll position
+        const updateArrowVisibility = () => {
+            const scrollLeft = projectsGrid.scrollLeft;
+            const maxScroll = projectsGrid.scrollWidth - projectsGrid.clientWidth;
+            
+            // Show left arrow if not at the start
+            if (scrollLeft > 10) {
+                scrollLeftBtn.classList.add('visible');
+            } else {
+                scrollLeftBtn.classList.remove('visible');
+            }
+            
+            // Show right arrow if not at the end
+            if (scrollLeft < maxScroll - 10) {
+                scrollRightBtn.classList.add('visible');
+            } else {
+                scrollRightBtn.classList.remove('visible');
+            }
+        };
+        
+        // Initial check
+        updateArrowVisibility();
+        
+        // Update on scroll
+        projectsGrid.addEventListener('scroll', updateArrowVisibility);
+        
+        // Update on window resize
+        window.addEventListener('resize', updateArrowVisibility);
+        
+        // Scroll left button click
+        scrollLeftBtn.addEventListener('click', () => {
+            const scrollAmount = projectsGrid.clientWidth * 0.8;
+            projectsGrid.scrollBy({
+                left: -scrollAmount,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Scroll right button click
+        scrollRightBtn.addEventListener('click', () => {
+            const scrollAmount = projectsGrid.clientWidth * 0.8;
+            projectsGrid.scrollBy({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        });
+    }
 }); 
