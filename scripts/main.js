@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const headerStyle = document.createElement('style');
     headerStyle.textContent = `
         header.scrolled {
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.3);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
     `;
