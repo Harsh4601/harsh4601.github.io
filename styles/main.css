@@ -626,6 +626,7 @@ section {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
+    align-items: stretch;
 }
 
 .projects-grid::-webkit-scrollbar {
@@ -673,11 +674,11 @@ section {
 }
 
 .scroll-arrow-left {
-    left: -25px;
+    left: 10px;
 }
 
 .scroll-arrow-right {
-    right: -25px;
+    right: 10px;
 }
 
 .project-card {
@@ -691,6 +692,9 @@ section {
     min-width: 380px;
     max-width: 380px;
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .project-card:hover {
@@ -703,6 +707,7 @@ section {
     position: relative;
     overflow: hidden;
     height: 220px;
+    flex-shrink: 0;
 }
 
 .project-image img {
@@ -718,6 +723,21 @@ section {
 
 .project-content {
     padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.project-content h3 {
+    margin-bottom: 0.75rem;
+    min-height: 3.5rem;
+    display: flex;
+    align-items: flex-start;
+}
+
+.project-content > p:first-of-type {
+    flex-grow: 1;
+    margin-bottom: 1rem;
 }
 
 .project-date {
@@ -730,7 +750,10 @@ section {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 1rem;
+    margin-top: auto;
+    margin-bottom: 1.5rem;
+    min-height: 4rem;
+    align-content: flex-start;
 }
 
 .tag {
@@ -739,6 +762,7 @@ section {
     border-radius: 20px;
     font-size: 0.8rem;
     transition: all var(--transition-speed) ease;
+    height: fit-content;
 }
 
 .tag:hover {
@@ -746,7 +770,7 @@ section {
 }
 
 .project-links {
-    margin-top: 1.5rem;
+    margin-top: 0;
     display: flex;
     gap: 1rem;
 }
@@ -901,10 +925,10 @@ footer {
         font-size: 1.2rem;
     }
     .scroll-arrow-left {
-        left: -15px;
+        left: 5px;
     }
     .scroll-arrow-right {
-        right: -15px;
+        right: 5px;
     }
 }
 
