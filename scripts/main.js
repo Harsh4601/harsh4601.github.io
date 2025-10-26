@@ -1,4 +1,106 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Create stars container
+    const starsContainer = document.createElement('div');
+    starsContainer.id = 'stars-container';
+    document.body.insertBefore(starsContainer, document.body.firstChild);
+    
+    // Generate stars with scroll-based movement
+    const stars = [];
+    
+    function createStars() {
+        const numberOfStars = 60;
+        
+        for (let i = 0; i < numberOfStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            // Random position
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            
+            // Random properties
+            const opacity = 0.3 + Math.random() * 0.5;
+            const speed = 0.1 + Math.random() * 0.3; // Very slow parallax speed (0.1-0.4)
+            
+            star.style.left = `${x}%`;
+            star.style.top = `${y}%`;
+            star.style.setProperty('--opacity', opacity);
+            
+            // Store star data for scroll animation
+            stars.push({
+                element: star,
+                initialY: y,
+                speed: speed
+            });
+            
+            starsContainer.appendChild(star);
+        }
+    }
+    
+    createStars();
+    
+    // Track scroll position for parallax effect
+    let lastScrollY = window.scrollY;
+    let scrollVelocity = 0;
+    
+    function updateStarsOnScroll() {
+        const currentScrollY = window.scrollY;
+        const scrollDelta = currentScrollY - lastScrollY;
+        
+        // Update scroll velocity (smooth it out)
+        scrollVelocity = scrollVelocity * 0.8 + scrollDelta * 0.2;
+        
+        // Update each star based on scroll
+        stars.forEach(star => {
+            // Calculate new Y position based on scroll with parallax effect
+            const movement = scrollVelocity * star.speed;
+            const currentTransform = star.element.style.transform || 'translateY(0px)';
+            const currentY = parseFloat(currentTransform.match(/translateY\(([-\d.]+)px\)/) ? 
+                                       currentTransform.match(/translateY\(([-\d.]+)px\)/)[1] : 0);
+            
+            const newY = currentY + movement;
+            
+            // Apply transform
+            star.element.style.transform = `translateY(${newY}px)`;
+        });
+        
+        lastScrollY = currentScrollY;
+    }
+    
+    // Update stars on scroll
+    window.addEventListener('scroll', updateStarsOnScroll, { passive: true });
+    
+    // Mouse-following background effect
+    let mouseX = 0;
+    let mouseY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) * 100;
+        mouseY = (e.clientY / window.innerHeight) * 100;
+        
+        // Add active class when mouse is detected
+        if (!document.body.classList.contains('mouse-active')) {
+            document.body.classList.add('mouse-active');
+        }
+    });
+    
+    // Smooth animation for the background effect
+    function animate() {
+        // Smooth interpolation for natural movement
+        const speed = 0.15;
+        currentX += (mouseX - currentX) * speed;
+        currentY += (mouseY - currentY) * speed;
+        
+        document.body.style.setProperty('--mouse-x', `${currentX}%`);
+        document.body.style.setProperty('--mouse-y', `${currentY}%`);
+        
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
+    
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('.nav-item');
     
