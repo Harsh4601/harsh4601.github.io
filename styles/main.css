@@ -182,23 +182,10 @@ header {
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.logo-image {
-    width: 45px;
-    height: 45px;
-    border-radius: 8px;
-    object-fit: cover;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    transition: all var(--transition-speed) ease;
-}
-
-.logo-image:hover {
-    border-color: var(--accent-primary);
-    transform: scale(1.05);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
 }
 
 .nav-links {
@@ -365,12 +352,40 @@ section {
 
 /* About Section */
 .about-content {
-    max-width: 800px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.about-image {
+    position: relative;
+    max-width: 250px;
     margin: 0 auto;
 }
 
-.about-text {
-    text-align: left;
+.image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transform: perspective(1000px) rotateY(5deg);
+    transition: transform var(--transition-speed) ease;
+}
+
+.image-container:hover {
+    transform: perspective(1000px) rotateY(0deg);
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.7s ease;
+}
+
+.image-container:hover img {
+    transform: scale(1.05);
 }
 
 .personal-info {
@@ -796,6 +811,13 @@ footer {
 @media (max-width: 992px) {
     html {
         font-size: 14px;
+    }
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+    .about-image {
+        max-width: 300px;
+        margin: 0 auto 2rem;
     }
     .contact-container {
         grid-template-columns: 1fr;
