@@ -46,7 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 speed: speed,
                 translateY: 0, // Track Y position directly instead of parsing
                 x: x, // Store percentage position
-                y: y
+                y: y,
+                // For magnetic effect
+                currentX: 0, // Current displacement from original position
+                currentY: 0,
+                velocityX: 0, // Velocity for smooth spring motion
+                velocityY: 0
             });
             
             starsContainer.appendChild(star);
@@ -73,8 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const movement = scrollVelocity * star.speed;
             star.translateY += movement;
             
-            // Apply transform using translate3d for better Safari performance
-            star.element.style.transform = `translate3d(0, ${star.translateY}px, 0)`;
+            // Don't apply transform here - let animate() handle it with magnetic effect
         });
         
         lastScrollY = currentScrollY;
@@ -202,6 +206,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    // Magnetic star attraction effect
+    function updateStarMagnetism() {
+        const magneticRadius = 150; // Distance at which stars are attracted to mouse
+        const attractionStrength = 0.05; // How strongly stars are pulled (reduced for subtlety)
+        const springStrength = 0.03; // How strongly stars return to original position (reduced)
+        const damping = 0.92; // Reduces velocity over time (makes it smooth, higher = smoother)
+        
+        stars.forEach(star => {
+            // Get star's original position in pixels
+            const rect = star.element.getBoundingClientRect();
+            const starCenterX = rect.left + rect.width / 2;
+            const starCenterY = rect.top + rect.height / 2;
+            
+            // Calculate distance from mouse to star
+            const dx = mousePixelX - starCenterX;
+            const dy = mousePixelY - starCenterY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            // If mouse is within magnetic radius
+            if (distance < magneticRadius && distance > 0) {
+                // Calculate attraction force (stronger when closer)
+                const force = (1 - distance / magneticRadius) * attractionStrength;
+                
+                // Apply force in direction of mouse
+                const angle = Math.atan2(dy, dx);
+                star.velocityX += Math.cos(angle) * force * 10;
+                star.velocityY += Math.sin(angle) * force * 10;
+            }
+            
+            // Spring force to return to original position
+            star.velocityX += -star.currentX * springStrength;
+            star.velocityY += -star.currentY * springStrength;
+            
+            // Apply damping to velocity
+            star.velocityX *= damping;
+            star.velocityY *= damping;
+            
+            // Update position
+            star.currentX += star.velocityX;
+            star.currentY += star.velocityY;
+            
+            // Apply the transform (combine scroll parallax with magnetic effect)
+            star.element.style.transform = `translate3d(${star.currentX}px, ${star.translateY + star.currentY}px, 0)`;
+        });
+    }
+    
     // Smooth animation for the background effect and constellation
     function animate() {
         // Smooth interpolation for natural movement
@@ -211,6 +261,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         document.body.style.setProperty('--mouse-x', `${currentX}%`);
         document.body.style.setProperty('--mouse-y', `${currentY}%`);
+        
+        // Update magnetic star attraction
+        updateStarMagnetism();
         
         // Draw constellation lines
         drawConstellation();
