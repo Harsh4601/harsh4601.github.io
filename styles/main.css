@@ -104,8 +104,9 @@ body.mouse-active::before {
     border-radius: 50%;
     box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
     opacity: var(--opacity);
-    transition: transform 0.3s ease-out;
     will-change: transform;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
 }
 
 /* Ensure content is above the background effect */

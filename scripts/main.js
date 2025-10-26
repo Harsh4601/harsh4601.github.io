@@ -26,11 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
             star.style.top = `${y}%`;
             star.style.setProperty('--opacity', opacity);
             
-            // Store star data for scroll animation
+            // Store star data for scroll animation (store Y position directly)
             stars.push({
                 element: star,
                 initialY: y,
-                speed: speed
+                speed: speed,
+                translateY: 0 // Track Y position directly instead of parsing
             });
             
             starsContainer.appendChild(star);
@@ -42,33 +43,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // Track scroll position for parallax effect
     let lastScrollY = window.scrollY;
     let scrollVelocity = 0;
+    let ticking = false;
     
     function updateStarsOnScroll() {
         const currentScrollY = window.scrollY;
         const scrollDelta = currentScrollY - lastScrollY;
         
         // Update scroll velocity (smooth it out)
-        scrollVelocity = scrollVelocity * 0.8 + scrollDelta * 0.2;
+        scrollVelocity = scrollVelocity * 0.85 + scrollDelta * 0.15;
         
         // Update each star based on scroll
         stars.forEach(star => {
             // Calculate new Y position based on scroll with parallax effect
             const movement = scrollVelocity * star.speed;
-            const currentTransform = star.element.style.transform || 'translateY(0px)';
-            const currentY = parseFloat(currentTransform.match(/translateY\(([-\d.]+)px\)/) ? 
-                                       currentTransform.match(/translateY\(([-\d.]+)px\)/)[1] : 0);
+            star.translateY += movement;
             
-            const newY = currentY + movement;
-            
-            // Apply transform
-            star.element.style.transform = `translateY(${newY}px)`;
+            // Apply transform using translate3d for better Safari performance
+            star.element.style.transform = `translate3d(0, ${star.translateY}px, 0)`;
         });
         
         lastScrollY = currentScrollY;
+        ticking = false;
+    }
+    
+    // Use requestAnimationFrame for smoother updates in Safari
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateStarsOnScroll);
+            ticking = true;
+        }
     }
     
     // Update stars on scroll
-    window.addEventListener('scroll', updateStarsOnScroll, { passive: true });
+    window.addEventListener('scroll', requestTick, { passive: true });
     
     // Mouse-following background effect
     let mouseX = 0;
