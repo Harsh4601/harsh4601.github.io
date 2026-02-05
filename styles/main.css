@@ -526,6 +526,19 @@ section {
     object-fit: contain;
 }
 
+.logo-fallback {
+    width: 60px;
+    height: 60px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
 .experience-header h3 {
     margin-bottom: 0.3rem;
 }

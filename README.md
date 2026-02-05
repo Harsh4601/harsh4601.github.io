@@ -39,6 +39,8 @@ A sleek, modern portfolio website with Apple-inspired dark theme design and smoo
 │   └── main.css         # Main stylesheet
 ├── scripts/
 │   └── main.js          # JavaScript for animations and interactions
+├── logos/               # Company logos for experience section
+│   └── README.md        # Logo setup instructions
 └── README.md            # Project documentation
 ```
 
