@@ -245,12 +245,36 @@
                 <div class="projects-grid">
                     <div class="project-card">
                         <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Sentinel-ES">
+                        </div>
+                        <div class="project-content">
+                            <h3>Sentinel-ES</h3>
+                            <p>Architected a multi-agent SRE system with 3 parallel AI agents (Sleuth, Historian, Scribe) coordinated by an Orchestrator for autonomous incident response. Implemented real-time anomaly detection using ES|QL queries comparing live HTTP 500 error rates against rolling baselines in Elasticsearch. Built async investigation pipeline correlating APM errors, GitHub commits, and runbook remediation steps with end-to-end resolution in under 10 seconds. Integrated Slack Block Kit alerts with one-click rollback approval, enforcing human-in-the-loop safety guardrails before any destructive action.</p>
+                            <div class="project-tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">Elasticsearch</span>
+                                <span class="tag">FastAPI</span>
+                                <span class="tag">Groq LLM</span>
+                                <span class="tag">Slack API</span>
+                                <span class="tag">Docker</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/Harsh4601/Sentinel-ES" target="_blank" class="project-link">
+                                    <i class="fab fa-github"></i> View on GitHub
+                                </a>
+                                <a href="https://harsh4601.github.io/Sentinel-ES/" target="_blank" class="project-link project-link-demo">
+                                    <i class="fas fa-external-link-alt"></i> View Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image">
                             <img src="https://images.unsplash.com/photo-1569428034239-f9565e32e224?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="3D Flight Visualization">
                         </div>
                         <div class="project-content">
                             <h3>High-Performance 3D Flight Visualization System</h3>
-                            <p class="project-date">August 2025 – October 2025</p>
-                            <p>Built an interactive 3D visualization platform for analyzing albatross flight trajectories with synchronized sensor analytics. Implemented streaming CSV parsing (>90 MB datasets) using Web Workers + PapaParse, achieving <15s load time with 40% less memory usage. Designed an incremental rendering pipeline for real-time visualization of 1M+ data points with advanced analytics including altitude-based coloring and linked time-range selection.</p>
+                            <p>Built an interactive 3D visualization platform for analyzing albatross flight trajectories with synchronized sensor analytics. Implemented streaming CSV parsing (>90 MB datasets) using Web Workers + PapaParse, achieving &lt;15s load time with 40% less memory usage. Designed an incremental rendering pipeline for real-time visualization of 1M+ data points with advanced analytics including altitude-based coloring and linked time-range selection.</p>
                             <div class="project-tags">
                                 <span class="tag">Three.js</span>
                                 <span class="tag">Chart.js</span>
@@ -262,6 +286,9 @@
                                 <a href="https://github.com/Harsh4601/albatross-flight-visualization" target="_blank" class="project-link">
                                     <i class="fab fa-github"></i> View on GitHub
                                 </a>
+                                <a href="https://harsh4601.github.io/High-Performance-Time-Series-Data-Pipeline-Visualization/" target="_blank" class="project-link project-link-demo">
+                                    <i class="fas fa-external-link-alt"></i> View Demo
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -271,7 +298,6 @@
                         </div>
                         <div class="project-content">
                             <h3>Banking System Using Modified Paxos and Two-Phase Commit Protocols</h3>
-                            <p class="project-date">November 2024 – December 2024</p>
                             <p>Built a distributed fault-tolerant banking system in Golang using Paxos for consensus and Two-Phase Commit for coordination. Optimized throughput and latency for 3000-item datasets.</p>
                             <div class="project-tags">
                                 <span class="tag">Golang</span>
@@ -292,7 +318,6 @@
                         </div>
                         <div class="project-content">
                             <h3>Context-Aware Notification Management System for Smartphones</h3>
-                            <p class="project-date">September 2024 – December 2024</p>
                             <p>Real-time sensor-based notification filtering system with 92% accuracy for indoor/outdoor detection and 95% reliability for activity recognition. Adaptive, ML-based, battery-optimized system.</p>
                             <div class="project-tags">
                                 <span class="tag">Machine Learning</span>
@@ -313,7 +338,6 @@
                         </div>
                         <div class="project-content">
                             <h3>Software Modeling Tool</h3>
-                            <p class="project-date">January 2021 – June 2021</p>
                             <p>Multi-diagram software development tool with drag-and-drop UI for flowcharts, database diagrams, and fishbone diagrams. Achieved 30%+ time savings and cross-platform compatibility.</p>
                             <div class="project-tags">
                                 <span class="tag">UI/UX</span>
@@ -327,7 +351,7 @@
                                 </a>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </section>
