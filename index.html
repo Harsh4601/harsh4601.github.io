@@ -3,431 +3,314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harsh Vivek Londhekar | Portfolio</title>
+    <title>Harsh Vivek Londhekar | Spatial Portfolio</title>
     <link rel="icon" type="image/png" href="IMG_4499.png">
     <link rel="apple-touch-icon" href="IMG_4499.png">
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">HL</div>
-            <div class="nav-links">
-                <a href="#home" class="nav-item">Home</a>
-                <a href="#about" class="nav-item">About</a>
-                <a href="#experience" class="nav-item">Experience</a>
-                <a href="#skills" class="nav-item">Skills</a>
-                <a href="#projects" class="nav-item">Projects</a>
-                <a href="#contact" class="nav-item">Contact</a>
-            </div>
-        </nav>
+    <!-- Environment -->
+    <canvas id="stars"></canvas>
+    <div id="aurora"></div>
+    <div id="cursor-glow"></div>
+
+    <!-- Spatial canvas -->
+    <div id="viewport">
+        <div id="world">
+
+            <!-- Ambient section labels floating in space -->
+            <div class="space-label" data-x="0" data-y="-1190" data-depth="0.78">SKILLS</div>
+            <div class="space-label" data-x="-975" data-y="-500" data-depth="0.78">ABOUT</div>
+            <div class="space-label" data-x="-1000" data-y="170" data-depth="0.78">EDUCATION</div>
+            <div class="space-label" data-x="1480" data-y="-810" data-depth="0.78">EXPERIENCE</div>
+            <div class="space-label" data-x="0" data-y="690" data-depth="0.78">PROJECTS</div>
+            <div class="space-label" data-x="1450" data-y="760" data-depth="0.78">CONNECT</div>
+
+            <!-- HERO -->
+            <section class="panel hero-panel" id="hero" data-group="home" data-x="0" data-y="0" data-depth="1">
+                <div class="hero-eyebrow">SPATIAL PORTFOLIO</div>
+                <h1>Harsh Vivek<br>Londhekar</h1>
+                <h2>Software Engineer</h2>
+                <p>Building intuitive and performant solutions — from distributed systems to immersive interfaces.</p>
+                <div class="cta-buttons">
+                    <button class="btn primary" data-jump="projects"><i class="fas fa-layer-group"></i> View Projects</button>
+                    <button class="btn secondary" data-jump="contact"><i class="fas fa-paper-plane"></i> Contact Me</button>
+                </div>
+                <div class="hero-hint-row">
+                    <span><i class="fas fa-up-down-left-right"></i> Drag or scroll to look around</span>
+                </div>
+            </section>
+
+            <!-- ABOUT -->
+            <section class="panel" id="about" data-group="about" data-x="-950" data-y="-120" data-depth="0.97">
+                <div class="panel-title"><i class="fas fa-user"></i> About Me</div>
+                <div class="about-top">
+                    <img src="IMG_4499.png" alt="Harsh Londhekar" class="avatar">
+                    <div>
+                        <h3>Harsh Londhekar</h3>
+                        <p class="muted">MS Computer Science · Stony Brook University</p>
+                    </div>
+                </div>
+                <p>I'm a Computer Science graduate student at Stony Brook University with professional experience in software engineering, specializing in performance testing, automation, and full-stack development.</p>
+                <p>My technical journey spans from building distributed systems and iOS applications to creating automated testing frameworks and performance optimization solutions.</p>
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/harshlondhekar" target="_blank" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://github.com/Harsh4601" target="_blank" class="social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="mailto:harsh.londhekar@stonybrook.edu" class="social-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </section>
+
+            <!-- EDUCATION -->
+            <section class="panel" id="education" data-group="education" data-x="-1000" data-y="520" data-depth="1.03">
+                <div class="panel-title"><i class="fas fa-graduation-cap"></i> Education</div>
+                <div class="edu-item">
+                    <img src="sbu.svg.png" alt="Stony Brook University" class="org-logo">
+                    <div>
+                        <h3>MS in Computer Science</h3>
+                        <h4>Stony Brook University, New York</h4>
+                        <p class="date-pill">Aug 2024 – May 2026</p>
+                        <p class="muted">Distributed Systems · Visualization · Wireless &amp; Mobile Networks</p>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="edu-item">
+                    <img src="vit.svg.png" alt="VIT" class="org-logo">
+                    <div>
+                        <h3>B.Tech in Computer Science</h3>
+                        <h4>Vellore Institute of Technology, India</h4>
+                        <p class="date-pill">Jul 2019 – Apr 2023 · GPA 8.82/10</p>
+                        <p class="muted">Deep Learning · NLP · DBMS · AI · Operating Systems</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SKILLS -->
+            <section class="panel" id="skills-dev" data-group="skills" data-x="-600" data-y="-810" data-depth="0.94">
+                <div class="panel-title"><i class="fas fa-code"></i> Programming &amp; Development</div>
+                <div class="skill-items">
+                    <span class="skill-item"><i class="fas fa-code"></i>C++</span>
+                    <span class="skill-item"><i class="fab fa-python"></i>Python</span>
+                    <span class="skill-item"><i class="fas fa-database"></i>SQL</span>
+                    <span class="skill-item"><i class="fab fa-golang"></i>Golang</span>
+                    <span class="skill-item"><i class="fab fa-swift"></i>Swift</span>
+                    <span class="skill-item"><i class="fab fa-html5"></i>HTML/CSS</span>
+                    <span class="skill-item"><i class="fab fa-js"></i>JavaScript</span>
+                    <span class="skill-item"><i class="fas fa-cube"></i>Three.js</span>
+                    <span class="skill-item"><i class="fas fa-chart-bar"></i>Chart.js</span>
+                    <span class="skill-item"><i class="fas fa-cogs"></i>Web Workers</span>
+                    <span class="skill-item"><i class="fab fa-apple"></i>iOS</span>
+                    <span class="skill-item"><i class="fab fa-python"></i>Django</span>
+                    <span class="skill-item"><i class="fas fa-bolt"></i>FastAPI</span>
+                    <span class="skill-item"><i class="fas fa-network-wired"></i>Distributed Systems</span>
+                    <span class="skill-item"><i class="fas fa-robot"></i>LLM / AI Agents</span>
+                    <span class="skill-item"><i class="fas fa-sync"></i>asyncio</span>
+                </div>
+            </section>
+
+            <section class="panel" id="skills-cloud" data-group="skills" data-x="-30" data-y="-890" data-depth="1.05">
+                <div class="panel-title"><i class="fas fa-cloud"></i> Database &amp; Cloud</div>
+                <div class="skill-items">
+                    <span class="skill-item"><i class="fas fa-search"></i>Elasticsearch</span>
+                    <span class="skill-item"><i class="fas fa-database"></i>SQLite</span>
+                    <span class="skill-item"><i class="fas fa-leaf"></i>MongoDB</span>
+                    <span class="skill-item"><i class="fab fa-aws"></i>AWS</span>
+                    <span class="skill-item"><i class="far fa-clock"></i>CloudWatch</span>
+                    <span class="skill-item"><i class="fas fa-fire"></i>Firebase</span>
+                    <span class="skill-item"><i class="fas fa-database"></i>S3</span>
+                    <span class="skill-item"><i class="fas fa-exchange-alt"></i>SQS</span>
+                    <span class="skill-item"><i class="fas fa-stream"></i>Kafka</span>
+                    <span class="skill-item"><i class="fab fa-docker"></i>Docker</span>
+                    <span class="skill-item"><i class="fas fa-database"></i>Redis</span>
+                </div>
+            </section>
+
+            <section class="panel" id="skills-devops" data-group="skills" data-x="540" data-y="-800" data-depth="0.96">
+                <div class="panel-title"><i class="fas fa-gears"></i> DevOps &amp; Automation</div>
+                <div class="skill-items">
+                    <span class="skill-item"><i class="fab fa-git-alt"></i>Git</span>
+                    <span class="skill-item"><i class="fab fa-jenkins"></i>Jenkins</span>
+                    <span class="skill-item"><i class="fas fa-sync-alt"></i>CI/CD</span>
+                    <span class="skill-item"><i class="fas fa-dharmachakra"></i>Kubernetes</span>
+                    <span class="skill-item"><i class="fas fa-vial"></i>Selenium</span>
+                    <span class="skill-item"><i class="fas fa-tachometer-alt"></i>JMeter</span>
+                    <span class="skill-item"><i class="fas fa-chart-line"></i>Grafana</span>
+                    <span class="skill-item"><i class="fas fa-chart-area"></i>Kibana</span>
+                    <span class="skill-item"><i class="fas fa-paw"></i>Datadog</span>
+                    <span class="skill-item"><i class="fab fa-slack"></i>Slack API</span>
+                    <span class="skill-item"><i class="fab fa-jira"></i>Jira</span>
+                    <span class="skill-item"><i class="fas fa-balance-scale"></i>Load Balancing</span>
+                </div>
+            </section>
+
+            <!-- EXPERIENCE -->
+            <section class="panel exp-panel" id="exp-amazon" data-group="experience" data-x="1130" data-y="-360" data-depth="1">
+                <div class="exp-header">
+                    <img src="logos/amazon.png" alt="Amazon" class="org-logo">
+                    <div>
+                        <h3>Amazon</h3>
+                        <h4>Quality Assurance Engineer Intern</h4>
+                        <p class="muted">Seattle, WA</p>
+                    </div>
+                </div>
+                <p class="date-pill">May 2025 – Aug 2025</p>
+                <ul class="achievement-list panel-scroll">
+                    <li>Implemented end-to-end UI test automation for a large-scale data analytics platform using Cypress &amp; TypeScript, expanding coverage from 0% to ~85% and boosting release confidence</li>
+                    <li>Reduced manual validation effort by ~83% per release (from ~5 hrs to ~45 mins per stage) by automating integration test flows</li>
+                    <li>Saved ~15 mins of smoke testing per code review through end-to-end automation, accelerating delivery cycles</li>
+                    <li>Designed a modular, scalable test architecture (page objects, reusable steps, workflow orchestration, data-driven suites)</li>
+                    <li>Built custom Cypress commands, API helpers, and stability utilities, eliminating flaky CI tests</li>
+                    <li>Automated validation of critical business workflows — filters, saved views, exports, and cross-grid consistency</li>
+                    <li>Enforced maintainability standards with TypeScript typing, ESLint, Prettier, and standardized constants</li>
+                    <li>Authored a technical design document and collaborated with SDEs in peer reviews</li>
+                    <li>Set up CI/CD pipelines and automated deployments to alpha/beta/gamma using AWS Fargate for the Hydra test platform</li>
+                </ul>
+            </section>
+
+            <section class="panel exp-panel" id="exp-enphase" data-group="experience" data-x="1240" data-y="380" data-depth="1.04">
+                <div class="exp-header">
+                    <img src="logos/enphase.png" alt="Enphase Energy" class="org-logo">
+                    <div>
+                        <h3>Enphase Energy</h3>
+                        <h4>Associate Software Engineer</h4>
+                        <p class="muted">Bengaluru, India</p>
+                    </div>
+                </div>
+                <p class="date-pill">Jan 2023 – Aug 2024</p>
+                <ul class="achievement-list">
+                    <li>Built Django REST Framework release tracker dashboard (Jira integration)</li>
+                    <li>Automated UI workflows (Python + Selenium) reducing manual effort by 90%</li>
+                    <li>Automated Jira ticket filing (85% time reduction)</li>
+                    <li>Improved performance test coverage by scripting JMX files (75%+ increase)</li>
+                    <li>Developed APIs to SQL → Grafana dashboard data pipeline</li>
+                    <li>Automated 30+ load-testing scenarios with Jenkins (40% faster testing)</li>
+                </ul>
+            </section>
+
+            <section class="panel exp-panel" id="exp-hectra" data-group="experience" data-x="1830" data-y="0" data-depth="0.93">
+                <div class="exp-header">
+                    <img src="logos/hectra.png" alt="Hectra Services" class="org-logo">
+                    <div>
+                        <h3>Hectra Services</h3>
+                        <h4>iOS App Developer Intern</h4>
+                        <p class="muted">New Delhi, India</p>
+                    </div>
+                </div>
+                <p class="date-pill">May 2021 – Oct 2021</p>
+                <ul class="achievement-list">
+                    <li>Developed front-end using Storyboard</li>
+                    <li>Integrated backend services using Google Firebase</li>
+                    <li>Added Google Maps SDK increasing user engagement by 25%</li>
+                    <li>Led front-end design improvements enhancing cross-platform consistency by 20%</li>
+                </ul>
+            </section>
+
+            <!-- PROJECTS -->
+            <section class="panel project-panel" id="proj-sentinel" data-group="projects" data-x="-760" data-y="1080" data-depth="0.95">
+                <div class="project-image"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Sentinel-ES"></div>
+                <h3>Sentinel-ES</h3>
+                <p class="panel-scroll proj-desc">Multi-agent SRE system with 3 parallel AI agents (Sleuth, Historian, Scribe) coordinated by an Orchestrator for autonomous incident response. Real-time anomaly detection via ES|QL queries against rolling baselines in Elasticsearch. Async investigation pipeline correlating APM errors, GitHub commits, and runbooks — end-to-end resolution in under 10 seconds, with Slack one-click rollback and human-in-the-loop guardrails.</p>
+                <div class="project-tags">
+                    <span class="tag">Python</span><span class="tag">Elasticsearch</span><span class="tag">FastAPI</span><span class="tag">Groq LLM</span><span class="tag">Slack API</span><span class="tag">Docker</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Harsh4601/Sentinel-ES" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="https://harsh4601.github.io/Sentinel-ES/" target="_blank" class="project-link demo"><i class="fas fa-arrow-up-right-from-square"></i> Demo</a>
+                </div>
+            </section>
+
+            <section class="panel project-panel" id="proj-flight" data-group="projects" data-x="-255" data-y="1210" data-depth="1.04">
+                <div class="project-image"><img src="https://images.unsplash.com/photo-1569428034239-f9565e32e224?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="3D Flight Visualization"></div>
+                <h3>3D Flight Visualization System</h3>
+                <p class="panel-scroll proj-desc">Interactive 3D platform for analyzing albatross flight trajectories with synchronized sensor analytics. Streaming CSV parsing (&gt;90 MB datasets) with Web Workers + PapaParse — &lt;15s load time, 40% less memory. Incremental rendering pipeline for 1M+ points with altitude-based coloring and linked time-range selection.</p>
+                <div class="project-tags">
+                    <span class="tag">Three.js</span><span class="tag">Chart.js</span><span class="tag">Web Workers</span><span class="tag">JavaScript</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Harsh4601/albatross-flight-visualization" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="https://harsh4601.github.io/High-Performance-Time-Series-Data-Pipeline-Visualization/" target="_blank" class="project-link demo"><i class="fas fa-arrow-up-right-from-square"></i> Demo</a>
+                </div>
+            </section>
+
+            <section class="panel project-panel" id="proj-banking" data-group="projects" data-x="250" data-y="1080" data-depth="0.97">
+                <div class="project-image"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Banking System"></div>
+                <h3>Distributed Banking System</h3>
+                <p class="panel-scroll proj-desc">Fault-tolerant banking system in Golang using Modified Paxos for consensus and Two-Phase Commit for cross-shard coordination. Optimized throughput and latency for 3000-item datasets.</p>
+                <div class="project-tags">
+                    <span class="tag">Golang</span><span class="tag">Paxos</span><span class="tag">2PC</span><span class="tag">Distributed Systems</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Harsh4601/Banking-System-Using-Modified-Paxos-and-Two-Phase-Commit-Protocols" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </section>
+
+            <section class="panel project-panel" id="proj-notify" data-group="projects" data-x="755" data-y="1210" data-depth="1.02">
+                <div class="project-image"><img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Notification Management"></div>
+                <h3>Context-Aware Notification System</h3>
+                <p class="panel-scroll proj-desc">Real-time sensor-based notification filtering for smartphones — 92% accuracy for indoor/outdoor detection, 95% reliability for activity recognition. Adaptive, ML-based, and battery-optimized.</p>
+                <div class="project-tags">
+                    <span class="tag">Machine Learning</span><span class="tag">Mobile</span><span class="tag">Sensors</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Harsh4601/Context-Aware-Notification-Management-System-for-Smartphones-" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </section>
+
+            <section class="panel project-panel" id="proj-modeling" data-group="projects" data-x="0" data-y="1810" data-depth="0.92">
+                <div class="project-image"><img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Software Modeling Tool"></div>
+                <h3>Software Modeling Tool</h3>
+                <p class="panel-scroll proj-desc">Multi-diagram software development tool with drag-and-drop UI for flowcharts, database diagrams, and fishbone diagrams. 30%+ time savings with cross-platform compatibility.</p>
+                <div class="project-tags">
+                    <span class="tag">UI/UX</span><span class="tag">Drag-and-Drop</span><span class="tag">Cross-Platform</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Harsh4601/SoftwareModellingTool" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </section>
+
+            <!-- CONTACT -->
+            <section class="panel" id="contact" data-group="contact" data-x="1480" data-y="1080" data-depth="1">
+                <div class="panel-title"><i class="fas fa-paper-plane"></i> Get In Touch</div>
+                <a class="contact-row" href="mailto:harsh.londhekar@stonybrook.edu">
+                    <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                    <span><strong>Email</strong><br>harsh.londhekar@stonybrook.edu</span>
+                </a>
+                <a class="contact-row" href="https://linkedin.com/in/harshlondhekar" target="_blank">
+                    <span class="contact-icon"><i class="fab fa-linkedin-in"></i></span>
+                    <span><strong>LinkedIn</strong><br>linkedin.com/in/harshlondhekar</span>
+                </a>
+                <a class="contact-row" href="https://github.com/Harsh4601" target="_blank">
+                    <span class="contact-icon"><i class="fab fa-github"></i></span>
+                    <span><strong>GitHub</strong><br>github.com/Harsh4601</span>
+                </a>
+                <p class="footer-note">© 2026 Harsh Londhekar · Crafted in space</p>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Fixed chrome -->
+    <header id="chrome-bar" class="glass-chip">
+        <span class="logo-dot">HL</span>
+        <span class="chrome-title">Harsh Londhekar</span>
     </header>
 
-    <main>
-        <section id="home" class="hero">
-            <div class="container fade-in">
-                <h1 class="animate-text">Harsh Vivek Londhekar</h1>
-                <h2 class="animate-text-delay">Software Engineer</h2>
-                <p class="animate-text-delay-more">Building intuitive and performant solutions</p>
-                <div class="cta-buttons">
-                    <a href="#projects" class="btn primary">View Projects</a>
-                    <a href="#contact" class="btn secondary">Contact Me</a>
-                </div>
-            </div>
-        </section>
+    <nav id="dock" class="glass-chip" aria-label="Sections">
+        <button class="dock-btn active" data-target="home" aria-label="Home"><i class="fas fa-house"></i><span class="dock-label">Home</span></button>
+        <button class="dock-btn" data-target="about" aria-label="About"><i class="fas fa-user"></i><span class="dock-label">About</span></button>
+        <button class="dock-btn" data-target="education" aria-label="Education"><i class="fas fa-graduation-cap"></i><span class="dock-label">Education</span></button>
+        <button class="dock-btn" data-target="skills" aria-label="Skills"><i class="fas fa-code"></i><span class="dock-label">Skills</span></button>
+        <button class="dock-btn" data-target="experience" aria-label="Experience"><i class="fas fa-briefcase"></i><span class="dock-label">Experience</span></button>
+        <button class="dock-btn" data-target="projects" aria-label="Projects"><i class="fas fa-layer-group"></i><span class="dock-label">Projects</span></button>
+        <button class="dock-btn" data-target="contact" aria-label="Contact"><i class="fas fa-envelope"></i><span class="dock-label">Contact</span></button>
+        <div class="dock-sep"></div>
+        <button class="dock-btn" id="zoom-out-btn" aria-label="Overview"><i class="fas fa-compress"></i><span class="dock-label">Overview</span></button>
+    </nav>
 
-        <section id="about" class="about">
-            <div class="container">
-                <h2 class="section-title">About Me</h2>
-                <div class="about-content">
-                    <div class="about-image">
-                        <div class="image-container">
-                            <img src="IMG_4499.png" alt="Harsh Londhekar">
-                        </div>
-                    </div>
-                    <div class="about-text">
-                        <p>I'm a Computer Science graduate student at Stony Brook University with professional experience in software engineering, specializing in performance testing, automation, and full-stack development.</p>
-                        <p>My technical journey spans from building distributed systems and iOS applications to creating automated testing frameworks and performance optimization solutions.</p>
-                        <div class="personal-info">
-                            <div class="info-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Stony Brook, NY</span>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>harsh.londhekar@stonybrook.edu</span>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-phone"></i>
-                                <span>+1 631-428-8358</span>
-                            </div>
-                        </div>
-                        <div class="social-links">
-                            <a href="https://linkedin.com/in/harshlondhekar" target="_blank" class="social-link">
-                                <i class="fab fa-linkedin"></i>
-                            </a>
-                            <a href="https://github.com/Harsh4601" target="_blank" class="social-link">
-                                <i class="fab fa-github"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <canvas id="minimap" width="180" height="120" title="Minimap — click to travel"></canvas>
 
-        <section id="education" class="education">
-            <div class="container">
-                <h2 class="section-title">Education</h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="education-header">
-                                <img src="sbu.svg.png" alt="Stony Brook University Logo" class="university-logo">
-                                <div>
-                                    <h3>Master of Science in Computer Science</h3>
-                                    <h4>Stony Brook University, New York</h4>
-                                </div>
-                            </div>
-                            <p class="timeline-date">August 2024 – May 2026</p>
-                            <p>Coursework: Distributed Systems, Visualization, Wireless and Mobile Networks</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="education-header">
-                                <img src="vit.svg.png" alt="VIT Logo" class="university-logo">
-                                <div>
-                                    <h3>Bachelor of Technology in Computer Science and Engineering</h3>
-                                    <h4>Vellore Institute of Technology, Vellore, India</h4>
-                                </div>
-                            </div>
-                            <p class="timeline-date">July 2019 – April 2023 | GPA: 8.82/10.0</p>
-                            <p>Coursework: Deep Learning, Natural Language Processing, Database Management Systems, Artificial Intelligence, Operating Systems</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills" class="skills">
-            <div class="container">
-                <h2 class="section-title">Technical Skills</h2>
-                <div class="skills-container">
-                    <div class="skill-category">
-                        <h3>Programming & Development</h3>
-                        <div class="skill-items">
-                            <span class="skill-item"><i class="fas fa-code skill-icon"></i>C++</span>
-                            <span class="skill-item"><i class="fab fa-python skill-icon"></i>Python</span>
-                            <span class="skill-item"><i class="fas fa-database skill-icon"></i>SQL</span>
-                            <span class="skill-item"><i class="fab fa-golang skill-icon"></i>Golang</span>
-                            <span class="skill-item"><i class="fab fa-swift skill-icon"></i>Swift</span>
-                            <span class="skill-item"><i class="fab fa-html5 skill-icon"></i>HTML/CSS</span>
-                            <span class="skill-item"><i class="fab fa-js skill-icon"></i>JavaScript</span>
-                            <span class="skill-item"><i class="fas fa-cube skill-icon"></i>Three.js</span>
-                            <span class="skill-item"><i class="fas fa-chart-bar skill-icon"></i>Chart.js</span>
-                            <span class="skill-item"><i class="fas fa-cogs skill-icon"></i>Web Workers</span>
-                            <span class="skill-item"><i class="fab fa-apple skill-icon"></i>iOS Development</span>
-                            <span class="skill-item"><i class="fab fa-python skill-icon"></i>Django</span>
-                            <span class="skill-item"><i class="fas fa-bolt skill-icon"></i>FastAPI</span>
-                            <span class="skill-item"><i class="fas fa-network-wired skill-icon"></i>Distributed Systems</span>
-                            <span class="skill-item"><i class="fas fa-robot skill-icon"></i>LLM / AI Agents</span>
-                            <span class="skill-item"><i class="fas fa-sync skill-icon"></i>asyncio</span>
-                        </div>
-                    </div>
-                    <div class="skill-category">
-                        <h3>Database & Cloud</h3>
-                        <div class="skill-items">
-                            <span class="skill-item"><i class="fas fa-search skill-icon"></i>Elasticsearch</span>
-                            <span class="skill-item"><i class="fas fa-database skill-icon"></i>SQLite</span>
-                            <span class="skill-item"><i class="fas fa-leaf skill-icon"></i>MongoDB</span>
-                            <span class="skill-item"><i class="fab fa-aws skill-icon"></i>AWS</span>
-                            <span class="skill-item"><i class="far fa-clock skill-icon"></i>CloudWatch</span>
-                            <span class="skill-item"><i class="fas fa-fire skill-icon"></i>Google Firebase</span>
-                            <span class="skill-item"><i class="fas fa-database skill-icon"></i>S3</span>
-                            <span class="skill-item"><i class="fas fa-exchange-alt skill-icon"></i>SQS</span>
-                            <span class="skill-item"><i class="fas fa-stream skill-icon"></i>Kafka</span>
-                            <span class="skill-item"><i class="fab fa-docker skill-icon"></i>Docker</span>
-                            <span class="skill-item"><i class="fas fa-database skill-icon"></i>Redis</span>
-                        </div>
-                    </div>
-                    <div class="skill-category">
-                        <h3>DevOps & Automation</h3>
-                        <div class="skill-items">
-                            <span class="skill-item"><i class="fab fa-git-alt skill-icon"></i>Git</span>
-                            <span class="skill-item"><i class="fab fa-jenkins skill-icon"></i>Jenkins</span>
-                            <span class="skill-item"><i class="fas fa-sync-alt skill-icon"></i>CI/CD</span>
-                            <span class="skill-item"><i class="fas fa-dharmachakra skill-icon"></i>Kubernetes</span>
-                            <span class="skill-item"><i class="fas fa-vial skill-icon"></i>Selenium</span>
-                            <span class="skill-item"><i class="fas fa-tachometer-alt skill-icon"></i>JMeter</span>
-                            <span class="skill-item"><i class="fas fa-chart-line skill-icon"></i>Grafana</span>
-                            <span class="skill-item"><i class="fas fa-chart-area skill-icon"></i>Kibana</span>
-                            <span class="skill-item"><i class="fas fa-paw skill-icon"></i>Datadog</span>
-                            <span class="skill-item"><i class="fab fa-slack skill-icon"></i>Slack API</span>
-                            <span class="skill-item"><i class="fab fa-jira skill-icon"></i>Jira</span>
-                            <span class="skill-item"><i class="fas fa-balance-scale skill-icon"></i>Load Balancing</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="experience" class="experience">
-            <div class="container">
-                <h2 class="section-title">Professional Experience</h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="experience-header">
-                                <img src="logos/amazon.png" alt="Amazon Logo" class="company-logo">
-                                <div>
-                                    <h3>Amazon</h3>
-                                    <h4>Quality Assurance Engineer Intern</h4>
-                                    <p class="company-location">Seattle, WA</p>
-                                </div>
-                            </div>
-                            <p class="timeline-date">May 2025 – August 2025</p>
-                            <ul class="achievement-list">
-                                <li>Implemented end-to-end UI test automation for a large-scale data analytics platform using Cypress & TypeScript, expanding coverage from 0% to ~85% and boosting release confidence</li>
-                                <li>Reduced manual validation effort by ~83% per release (from ~5 hrs to ~45 mins per stage) by automating integration test flows</li>
-                                <li>Saved ~15 mins of smoke testing per code review (CR) through end-to-end automation, directly improving team efficiency and accelerating delivery cycles</li>
-                                <li>Designed and implemented a modular, scalable test architecture (page objects, reusable steps, workflow orchestration, and data-driven suites) improving reusability and maintainability</li>
-                                <li>Built custom Cypress commands, API helpers, and stability utilities (deterministic waits, smart loading checks, exception handling), cutting repetitive boilerplate and eliminating flaky CI tests</li>
-                                <li>Automated validation of critical business workflows, including filters, saved views, exports, and cross-grid consistency, ensuring robust coverage of high-impact features</li>
-                                <li>Enforced maintainability standards with TypeScript typing, ESLint, Prettier, and standardized constants, preventing brittle locators and improving developer onboarding</li>
-                                <li>Authored a detailed technical design document and collaborated with SDEs in peer reviews, ensuring production-quality engineering practices and long-term adoption</li>
-                                <li>Set up CI/CD pipelines and automated deployments to alpha, beta, and gamma environments, configuring infrastructure for the Hydra test platform by leveraging AWS Fargate compute services, ensuring scalable and efficient execution of test suites</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="experience-header">
-                                <img src="logos/enphase.png" alt="Enphase Energy Logo" class="company-logo">
-                                <div>
-                                    <h3>Enphase Energy</h3>
-                                    <h4>Associate Software Engineer</h4>
-                                    <p class="company-location">Bengaluru, India</p>
-                                </div>
-                            </div>
-                            <p class="timeline-date">January 2023 – August 2024</p>
-                            <ul class="achievement-list">
-                                <li>Built Django REST Framework release tracker dashboard (Jira integration)</li>
-                                <li>Automated UI workflows (Python + Selenium) reducing manual effort by 90%</li>
-                                <li>Automated Jira ticket filing (85% time reduction)</li>
-                                <li>Improved performance test coverage by scripting JMX files (75%+ increase)</li>
-                                <li>Developed APIs to SQL → Grafana dashboard data pipeline</li>
-                                <li>Filed critical gating bugs preventing production issues</li>
-                                <li>Automated 30+ load-testing scenarios with Jenkins (reduced testing time by 40%)</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-content">
-                            <div class="experience-header">
-                                <img src="logos/hectra.png" alt="Hectra Services Logo" class="company-logo">
-                                <div>
-                                    <h3>Hectra Services Pvt Ltd</h3>
-                                    <h4>iOS App Developer Intern</h4>
-                                    <p class="company-location">New Delhi, India</p>
-                                </div>
-                            </div>
-                            <p class="timeline-date">May 2021 – October 2021</p>
-                            <ul class="achievement-list">
-                                <li>Developed front-end using Storyboard</li>
-                                <li>Integrated backend services using Google Firebase</li>
-                                <li>Added Google Maps SDK increasing user engagement by 25%</li>
-                                <li>Led front-end design improvements enhancing cross-platform consistency by 20%</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects" class="projects">
-            <div class="container">
-                <h2 class="section-title">Projects</h2>
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Sentinel-ES">
-                        </div>
-                        <div class="project-content">
-                            <h3>Sentinel-ES</h3>
-                            <p>Architected a multi-agent SRE system with 3 parallel AI agents (Sleuth, Historian, Scribe) coordinated by an Orchestrator for autonomous incident response. Implemented real-time anomaly detection using ES|QL queries comparing live HTTP 500 error rates against rolling baselines in Elasticsearch. Built async investigation pipeline correlating APM errors, GitHub commits, and runbook remediation steps with end-to-end resolution in under 10 seconds. Integrated Slack Block Kit alerts with one-click rollback approval, enforcing human-in-the-loop safety guardrails before any destructive action.</p>
-                            <div class="project-tags">
-                                <span class="tag">Python</span>
-                                <span class="tag">Elasticsearch</span>
-                                <span class="tag">FastAPI</span>
-                                <span class="tag">Groq LLM</span>
-                                <span class="tag">Slack API</span>
-                                <span class="tag">Docker</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://github.com/Harsh4601/Sentinel-ES" target="_blank" class="project-link">
-                                    <i class="fab fa-github"></i> View on GitHub
-                                </a>
-                                <a href="https://harsh4601.github.io/Sentinel-ES/" target="_blank" class="project-link project-link-demo">
-                                    <i class="fas fa-external-link-alt"></i> View Demo
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="https://images.unsplash.com/photo-1569428034239-f9565e32e224?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="3D Flight Visualization">
-                        </div>
-                        <div class="project-content">
-                            <h3>High-Performance 3D Flight Visualization System</h3>
-                            <p>Built an interactive 3D visualization platform for analyzing albatross flight trajectories with synchronized sensor analytics. Implemented streaming CSV parsing (>90 MB datasets) using Web Workers + PapaParse, achieving &lt;15s load time with 40% less memory usage. Designed an incremental rendering pipeline for real-time visualization of 1M+ data points with advanced analytics including altitude-based coloring and linked time-range selection.</p>
-                            <div class="project-tags">
-                                <span class="tag">Three.js</span>
-                                <span class="tag">Chart.js</span>
-                                <span class="tag">Web Workers</span>
-                                <span class="tag">JavaScript</span>
-                                <span class="tag">Data Visualization</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://github.com/Harsh4601/albatross-flight-visualization" target="_blank" class="project-link">
-                                    <i class="fab fa-github"></i> View on GitHub
-                                </a>
-                                <a href="https://harsh4601.github.io/High-Performance-Time-Series-Data-Pipeline-Visualization/" target="_blank" class="project-link project-link-demo">
-                                    <i class="fas fa-external-link-alt"></i> View Demo
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Banking System Project">
-                        </div>
-                        <div class="project-content">
-                            <h3>Banking System Using Modified Paxos and Two-Phase Commit Protocols</h3>
-                            <p>Built a distributed fault-tolerant banking system in Golang using Paxos for consensus and Two-Phase Commit for coordination. Optimized throughput and latency for 3000-item datasets.</p>
-                            <div class="project-tags">
-                                <span class="tag">Golang</span>
-                                <span class="tag">Distributed Systems</span>
-                                <span class="tag">Paxos</span>
-                                <span class="tag">Two-Phase Commit</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://github.com/Harsh4601/Banking-System-Using-Modified-Paxos-and-Two-Phase-Commit-Protocols" target="_blank" class="project-link">
-                                    <i class="fab fa-github"></i> View on GitHub
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Notification Management System">
-                        </div>
-                        <div class="project-content">
-                            <h3>Context-Aware Notification Management System for Smartphones</h3>
-                            <p>Real-time sensor-based notification filtering system with 92% accuracy for indoor/outdoor detection and 95% reliability for activity recognition. Adaptive, ML-based, battery-optimized system.</p>
-                            <div class="project-tags">
-                                <span class="tag">Machine Learning</span>
-                                <span class="tag">Mobile Development</span>
-                                <span class="tag">Sensors</span>
-                                <span class="tag">Context-Aware Computing</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://github.com/Harsh4601/Context-Aware-Notification-Management-System-for-Smartphones-" target="_blank" class="project-link">
-                                    <i class="fab fa-github"></i> View on GitHub
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Software Modeling Tool">
-                        </div>
-                        <div class="project-content">
-                            <h3>Software Modeling Tool</h3>
-                            <p>Multi-diagram software development tool with drag-and-drop UI for flowcharts, database diagrams, and fishbone diagrams. Achieved 30%+ time savings and cross-platform compatibility.</p>
-                            <div class="project-tags">
-                                <span class="tag">UI/UX</span>
-                                <span class="tag">Software Development</span>
-                                <span class="tag">Drag-and-Drop</span>
-                                <span class="tag">Cross-Platform</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://github.com/Harsh4601/SoftwareModellingTool" target="_blank" class="project-link">
-                                    <i class="fab fa-github"></i> View on GitHub
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="contact">
-            <div class="container">
-                <h2 class="section-title">Contact Me</h2>
-                <div class="contact-container">
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <h3>Email</h3>
-                                <p>harsh.londhekar@stonybrook.edu</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fab fa-linkedin"></i>
-                            <div>
-                                <h3>LinkedIn</h3>
-                                <p><a href="https://linkedin.com/in/harshlondhekar" target="_blank">linkedin.com/in/harshlondhekar</a></p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fab fa-github"></i>
-                            <div>
-                                <h3>GitHub</h3>
-                                <p><a href="https://github.com/Harsh4601" target="_blank">github.com/Harsh4601</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Harsh Londhekar | Portfolio</p>
-        </div>
-    </footer>
+    <div id="hint" class="glass-chip"><i class="fas fa-hand-pointer"></i> Drag · Scroll · Pinch to explore</div>
 
     <script src="scripts/main.js"></script>
-
-    <style>
-    /* Add to your existing CSS styles */
-    .education-header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .university-logo {
-        width: 60px;
-        height: 60px;
-        margin-right: 15px;
-        object-fit: contain;
-    }
-
-    .skill-icon {
-        margin-right: 8px;
-        font-size: 16px;
-        width: 20px;
-        text-align: center;
-    }
-
-    .skill-item {
-        display: flex;
-        align-items: center;
-    }
-    </style>
 </body>
-</html> 
+</html>

@@ -1,481 +1,473 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Create stars container
-    const starsContainer = document.createElement('div');
-    starsContainer.id = 'stars-container';
-    document.body.insertBefore(starsContainer, document.body.firstChild);
-    
-    // Create SVG canvas for constellation lines
-    const svgNS = "http://www.w3.org/2000/svg";
-    const svgCanvas = document.createElementNS(svgNS, "svg");
-    svgCanvas.id = 'constellation-canvas';
-    svgCanvas.style.position = 'fixed';
-    svgCanvas.style.top = '0';
-    svgCanvas.style.left = '0';
-    svgCanvas.style.width = '100%';
-    svgCanvas.style.height = '100%';
-    svgCanvas.style.pointerEvents = 'none';
-    svgCanvas.style.zIndex = '1';
-    document.body.insertBefore(svgCanvas, document.body.firstChild);
-    
-    // Generate stars with scroll-based movement
-    const stars = [];
-    
-    function createStars() {
-        const numberOfStars = 120;
-        
-        for (let i = 0; i < numberOfStars; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            
-            // Random position
-            const x = Math.random() * 100;
-            const y = Math.random() * 100;
-            
-            // Random properties
-            const opacity = 0.3 + Math.random() * 0.5;
-            const speed = 0.1 + Math.random() * 0.3; // Very slow parallax speed (0.1-0.4)
-            
-            star.style.left = `${x}%`;
-            star.style.top = `${y}%`;
-            star.style.setProperty('--opacity', opacity);
-            
-            // Store star data for scroll animation (store Y position directly)
-            stars.push({
-                element: star,
-                initialY: y,
-                speed: speed,
-                translateY: 0, // Track Y position directly instead of parsing
-                x: x, // Store percentage position
-                y: y,
-                // For magnetic effect
-                currentX: 0, // Current displacement from original position
-                currentY: 0,
-                velocityX: 0, // Velocity for smooth spring motion
-                velocityY: 0
-            });
-            
-            starsContainer.appendChild(star);
-        }
-    }
-    
-    createStars();
-    
-    // Track scroll position for parallax effect
-    let lastScrollY = window.scrollY;
-    let scrollVelocity = 0;
-    let ticking = false;
-    
-    function updateStarsOnScroll() {
-        const currentScrollY = window.scrollY;
-        const scrollDelta = currentScrollY - lastScrollY;
-        
-        // Update scroll velocity (smooth it out)
-        scrollVelocity = scrollVelocity * 0.85 + scrollDelta * 0.15;
-        
-        // Update each star based on scroll
-        stars.forEach(star => {
-            // Calculate new Y position based on scroll with parallax effect
-            const movement = scrollVelocity * star.speed;
-            star.translateY += movement;
-            
-            // Don't apply transform here - let animate() handle it with magnetic effect
+/* ============================================================
+   Spatial engine — Vision Pro inspired panning canvas.
+   Panels live at world coordinates; a camera (x, y, zoom)
+   glides over them with parallax depth, drag/scroll/pinch
+   navigation, a dock, and a minimap.
+   ============================================================ */
+
+(() => {
+    'use strict';
+
+    const FLAT = window.matchMedia('(max-width: 820px)').matches;
+    const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const viewport = document.getElementById('viewport');
+    const dock = document.getElementById('dock');
+    const hint = document.getElementById('hint');
+    const minimap = document.getElementById('minimap');
+    const cursorGlow = document.getElementById('cursor-glow');
+    const aurora = document.getElementById('aurora');
+    const starsCanvas = document.getElementById('stars');
+
+    /* ------------------------------------------------------------------
+       Flat mode: small screens get a normal scrolling page.
+       ------------------------------------------------------------------ */
+    if (FLAT) {
+        document.body.classList.add('flat');
+        const groupFirst = {};
+        document.querySelectorAll('.panel').forEach(p => {
+            const g = p.dataset.group;
+            if (g && !groupFirst[g]) groupFirst[g] = p;
         });
-        
-        lastScrollY = currentScrollY;
-        ticking = false;
-    }
-    
-    // Use requestAnimationFrame for smoother updates in Safari
-    function requestTick() {
-        if (!ticking) {
-            requestAnimationFrame(updateStarsOnScroll);
-            ticking = true;
-        }
-    }
-    
-    // Update stars on scroll
-    window.addEventListener('scroll', requestTick, { passive: true });
-    
-    // Mouse-following background effect
-    let mouseX = 0;
-    let mouseY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    let mousePixelX = 0;
-    let mousePixelY = 0;
-    
-    document.addEventListener('mousemove', (e) => {
-        mouseX = (e.clientX / window.innerWidth) * 100;
-        mouseY = (e.clientY / window.innerHeight) * 100;
-        mousePixelX = e.clientX;
-        mousePixelY = e.clientY;
-        
-        // Add active class when mouse is detected
-        if (!document.body.classList.contains('mouse-active')) {
-            document.body.classList.add('mouse-active');
-        }
-    });
-    
-    // Constellation drawing function
-    function drawConstellation() {
-        // Clear existing lines
-        while (svgCanvas.firstChild) {
-            svgCanvas.removeChild(svgCanvas.firstChild);
-        }
-        
-        const maxDistance = 150; // Maximum distance for connection (in pixels)
-        const lineOpacityBase = 0.5;
-        
-        stars.forEach(star => {
-            // Get the current position of the star element
-            const rect = star.element.getBoundingClientRect();
-            const starX = rect.left + rect.width / 2;
-            const starY = rect.top + rect.height / 2;
-            
-            // Calculate distance from mouse to star
-            const dx = mousePixelX - starX;
-            const dy = mousePixelY - starY;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            // If star is within range, draw a line to the mouse
-            if (distance < maxDistance) {
-                const line = document.createElementNS(svgNS, 'line');
-                line.setAttribute('x1', starX);
-                line.setAttribute('y1', starY);
-                line.setAttribute('x2', mousePixelX);
-                line.setAttribute('y2', mousePixelY);
-                
-                // Calculate opacity based on distance (closer = more opaque)
-                const opacity = (1 - distance / maxDistance) * lineOpacityBase;
-                line.setAttribute('stroke', `rgba(147, 197, 253, ${opacity})`);
-                line.setAttribute('stroke-width', '1');
-                
-                svgCanvas.appendChild(line);
-                
-                // Add glow effect to the star
-                star.element.style.boxShadow = `0 0 ${10 - distance / maxDistance * 5}px rgba(147, 197, 253, 0.8)`;
-            } else {
-                // Remove glow when not connected
-                star.element.style.boxShadow = 'none';
-            }
+        const jumpTo = (g) => {
+            const el = groupFirst[g];
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+        dock.querySelectorAll('.dock-btn[data-target]').forEach(btn => {
+            btn.addEventListener('click', () => jumpTo(btn.dataset.target));
         });
-        
-        // Also connect nearby stars to each other for a more constellation-like effect
-        const starConnectDistance = 100; // Distance to connect stars to each other
-        for (let i = 0; i < stars.length; i++) {
-            for (let j = i + 1; j < stars.length; j++) {
-                const rect1 = stars[i].element.getBoundingClientRect();
-                const rect2 = stars[j].element.getBoundingClientRect();
-                
-                const star1X = rect1.left + rect1.width / 2;
-                const star1Y = rect1.top + rect1.height / 2;
-                const star2X = rect2.left + rect2.width / 2;
-                const star2Y = rect2.top + rect2.height / 2;
-                
-                // Check if both stars are near the mouse
-                const dist1ToMouse = Math.sqrt(
-                    Math.pow(mousePixelX - star1X, 2) + 
-                    Math.pow(mousePixelY - star1Y, 2)
-                );
-                const dist2ToMouse = Math.sqrt(
-                    Math.pow(mousePixelX - star2X, 2) + 
-                    Math.pow(mousePixelY - star2Y, 2)
-                );
-                
-                // Only connect stars if both are near the mouse
-                if (dist1ToMouse < maxDistance && dist2ToMouse < maxDistance) {
-                    const dx = star2X - star1X;
-                    const dy = star2Y - star1Y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < starConnectDistance) {
-                        const line = document.createElementNS(svgNS, 'line');
-                        line.setAttribute('x1', star1X);
-                        line.setAttribute('y1', star1Y);
-                        line.setAttribute('x2', star2X);
-                        line.setAttribute('y2', star2Y);
-                        
-                        const opacity = (1 - distance / starConnectDistance) * 0.3;
-                        line.setAttribute('stroke', `rgba(147, 197, 253, ${opacity})`);
-                        line.setAttribute('stroke-width', '0.5');
-                        
-                        svgCanvas.appendChild(line);
-                    }
-                }
-            }
-        }
-    }
-    
-    // Magnetic star attraction effect
-    function updateStarMagnetism() {
-        const magneticRadius = 150; // Distance at which stars are attracted to mouse
-        const attractionStrength = 0.05; // How strongly stars are pulled (reduced for subtlety)
-        const springStrength = 0.03; // How strongly stars return to original position (reduced)
-        const damping = 0.92; // Reduces velocity over time (makes it smooth, higher = smoother)
-        
-        stars.forEach(star => {
-            // Get star's original position in pixels
-            const rect = star.element.getBoundingClientRect();
-            const starCenterX = rect.left + rect.width / 2;
-            const starCenterY = rect.top + rect.height / 2;
-            
-            // Calculate distance from mouse to star
-            const dx = mousePixelX - starCenterX;
-            const dy = mousePixelY - starCenterY;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            // If mouse is within magnetic radius
-            if (distance < magneticRadius && distance > 0) {
-                // Calculate attraction force (stronger when closer)
-                const force = (1 - distance / magneticRadius) * attractionStrength;
-                
-                // Apply force in direction of mouse
-                const angle = Math.atan2(dy, dx);
-                star.velocityX += Math.cos(angle) * force * 10;
-                star.velocityY += Math.sin(angle) * force * 10;
-            }
-            
-            // Spring force to return to original position
-            star.velocityX += -star.currentX * springStrength;
-            star.velocityY += -star.currentY * springStrength;
-            
-            // Apply damping to velocity
-            star.velocityX *= damping;
-            star.velocityY *= damping;
-            
-            // Update position
-            star.currentX += star.velocityX;
-            star.currentY += star.velocityY;
-            
-            // Apply the transform (combine scroll parallax with magnetic effect)
-            star.element.style.transform = `translate3d(${star.currentX}px, ${star.translateY + star.currentY}px, 0)`;
+        document.getElementById('zoom-out-btn').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+        document.querySelectorAll('[data-jump]').forEach(btn => {
+            btn.addEventListener('click', () => jumpTo(btn.dataset.jump));
+        });
+        return;
     }
-    
-    // Smooth animation for the background effect and constellation
-    function animate() {
-        // Smooth interpolation for natural movement
-        const speed = 0.15;
-        currentX += (mouseX - currentX) * speed;
-        currentY += (mouseY - currentY) * speed;
-        
-        document.body.style.setProperty('--mouse-x', `${currentX}%`);
-        document.body.style.setProperty('--mouse-y', `${currentY}%`);
-        
-        // Update magnetic star attraction
-        updateStarMagnetism();
-        
-        // Draw constellation lines
-        drawConstellation();
-        
-        requestAnimationFrame(animate);
-    }
-    
-    animate();
-    
-    // Smooth scrolling for navigation links
-    const navLinks = document.querySelectorAll('.nav-item');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            const targetId = link.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
+
+    /* ------------------------------------------------------------------
+       Panels
+       ------------------------------------------------------------------ */
+    const panels = [...document.querySelectorAll('.panel, .space-label')].map((el, i) => ({
+        el,
+        x: parseFloat(el.dataset.x) || 0,
+        y: parseFloat(el.dataset.y) || 0,
+        depth: parseFloat(el.dataset.depth) || 1,
+        group: el.dataset.group || null,
+        isLabel: el.classList.contains('space-label'),
+        w: 0, h: 0,
+        phase: (i * 1.7) % (Math.PI * 2),
+        bobAmp: 5 + ((i * 37) % 10) * 0.7,
+        tiltX: 0, tiltY: 0, targetTiltX: 0, targetTiltY: 0,
+        hoverScale: 1, targetHoverScale: 1,
+        intro: 0,
+        introDelay: 500 + i * 70,
+    }));
+
+    const contentPanels = panels.filter(p => !p.isLabel);
+
+    let vw = window.innerWidth;
+    let vh = window.innerHeight;
+
+    const measure = () => {
+        vw = window.innerWidth;
+        vh = window.innerHeight;
+        panels.forEach(p => {
+            p.w = p.el.offsetWidth;
+            p.h = p.el.offsetHeight;
+        });
+    };
+
+    /* World bounds (for camera clamping + minimap) */
+    const bounds = { minX: 0, maxX: 0, minY: 0, maxY: 0 };
+    const computeBounds = () => {
+        bounds.minX = Math.min(...contentPanels.map(p => p.x - p.w / 2));
+        bounds.maxX = Math.max(...contentPanels.map(p => p.x + p.w / 2));
+        bounds.minY = Math.min(...contentPanels.map(p => p.y - p.h / 2));
+        bounds.maxY = Math.max(...contentPanels.map(p => p.y + p.h / 2));
+    };
+
+    /* ------------------------------------------------------------------
+       Camera
+       ------------------------------------------------------------------ */
+    const cam = { x: 0, y: 0, z: REDUCED_MOTION ? 1 : 0.45 };
+    const target = { x: 0, y: 0, z: 1 };
+    const ZOOM_MIN = 0.24, ZOOM_MAX = 1.4;
+
+    const clampTarget = () => {
+        const padX = 300, padY = 260;
+        target.x = Math.max(bounds.minX - padX, Math.min(bounds.maxX + padX, target.x));
+        target.y = Math.max(bounds.minY - padY, Math.min(bounds.maxY + padY, target.y));
+        target.z = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, target.z));
+    };
+
+    /* ------------------------------------------------------------------
+       Starfield environment
+       ------------------------------------------------------------------ */
+    const starCtx = starsCanvas.getContext('2d');
+    let stars = [];
+    const initStars = () => {
+        starsCanvas.width = vw;
+        starsCanvas.height = vh;
+        stars = [];
+        const layers = [
+            { count: Math.round(vw * vh / 9000), parallax: 0.06, rMax: 1.1, alpha: 0.55 },
+            { count: Math.round(vw * vh / 18000), parallax: 0.13, rMax: 1.7, alpha: 0.75 },
+            { count: Math.round(vw * vh / 50000), parallax: 0.22, rMax: 2.4, alpha: 1 },
+        ];
+        layers.forEach(l => {
+            for (let i = 0; i < l.count; i++) {
+                stars.push({
+                    x: Math.random() * vw,
+                    y: Math.random() * vh,
+                    r: 0.4 + Math.random() * l.rMax,
+                    a: l.alpha * (0.4 + Math.random() * 0.6),
+                    parallax: l.parallax,
+                    tw: Math.random() * Math.PI * 2,
+                    twSpeed: 0.4 + Math.random() * 1.2,
                 });
             }
         });
-    });
-    
-    // Parallax effect for hero section
-    const hero = document.querySelector('.hero');
-    
-    window.addEventListener('scroll', () => {
-        const scrollPosition = window.scrollY;
-        
-        if (scrollPosition < window.innerHeight) {
-            hero.style.transform = `translateY(${scrollPosition * 0.3}px)`;
-            hero.style.opacity = 1 - (scrollPosition * 0.002);
-        }
-    });
-    
-    // Intersection Observer for section animations
-    const animateOnScroll = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-                observer.unobserve(entry.target);
-            }
-        });
     };
-    
-    const observer = new IntersectionObserver(animateOnScroll, {
-        threshold: 0.15,
-        rootMargin: '0px 0px -100px 0px'
-    });
-    
-    // Observe sections
-    const sections = document.querySelectorAll('section:not(.hero)');
-    sections.forEach(section => {
-        section.classList.add('section-hidden');
-        observer.observe(section);
-    });
-    
-    // Observe timeline items
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    timelineItems.forEach((item, index) => {
-        item.style.opacity = '0';
-        item.style.transform = 'translateY(20px)';
-        item.style.transition = `all 0.5s ease ${0.1 + index * 0.1}s`;
-        
-        observer.observe(item);
-    });
-    
-    // Observe skill categories
-    const skillCategories = document.querySelectorAll('.skill-category');
-    skillCategories.forEach((category, index) => {
-        category.style.opacity = '0';
-        category.style.transform = 'translateY(20px)';
-        category.style.transition = `all 0.5s ease ${0.1 + index * 0.1}s`;
-        
-        observer.observe(category);
-    });
-    
-    // Observe project cards
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = `all 0.5s ease ${0.1 + index * 0.1}s`;
-        
-        observer.observe(card);
-    });
-    
-    // Add the animate-in CSS
-    const style = document.createElement('style');
-    style.textContent = `
-        .section-hidden {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
+
+    const drawStars = (t) => {
+        starCtx.clearRect(0, 0, vw, vh);
+        const time = t / 1000;
+        for (const s of stars) {
+            // wrap star positions as the camera pans
+            let sx = (s.x - cam.x * s.parallax) % vw;
+            let sy = (s.y - cam.y * s.parallax) % vh;
+            if (sx < 0) sx += vw;
+            if (sy < 0) sy += vh;
+            const twinkle = REDUCED_MOTION ? 1 : 0.7 + 0.3 * Math.sin(s.tw + time * s.twSpeed);
+            starCtx.globalAlpha = s.a * twinkle;
+            starCtx.fillStyle = '#cfd8ff';
+            starCtx.beginPath();
+            starCtx.arc(sx, sy, s.r, 0, Math.PI * 2);
+            starCtx.fill();
         }
-        
-        .animate-in {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
+        starCtx.globalAlpha = 1;
+    };
+
+    /* ------------------------------------------------------------------
+       Render loop
+       ------------------------------------------------------------------ */
+    const easeOutCubic = (x) => 1 - Math.pow(1 - x, 3);
+    let startTime = null;
+
+    const render = (t) => {
+        if (startTime === null) startTime = t;
+        const elapsed = t - startTime;
+        const time = t / 1000;
+
+        // glide camera toward target
+        cam.x += (target.x - cam.x) * 0.085;
+        cam.y += (target.y - cam.y) * 0.085;
+        cam.z += (target.z - cam.z) * 0.07;
+
+        drawStars(t);
+        aurora.style.transform = `translate3d(${-cam.x * 0.03}px, ${-cam.y * 0.03}px, 0)`;
+
+        for (const p of panels) {
+            // intro reveal, staggered per panel
+            if (p.intro < 1) {
+                p.intro = REDUCED_MOTION ? 1 :
+                    Math.min(1, Math.max(0, (elapsed - p.introDelay) / 900));
+            }
+            const introE = easeOutCubic(p.intro);
+
+            const f = p.depth * cam.z; // parallax factor
+            const bob = (REDUCED_MOTION || p.isLabel) ? 0 :
+                Math.sin(time * 0.6 + p.phase) * p.bobAmp;
+            const cx = (p.x - cam.x) * f + vw / 2;
+            const cy = (p.y - cam.y) * f + vh / 2 + bob;
+
+            // cull panels far outside the viewport
+            const margin = Math.max(p.w, p.h) * f + 240;
+            if (cx < -margin || cx > vw + margin || cy < -margin || cy > vh + margin) {
+                p.el.style.visibility = 'hidden';
+                continue;
+            }
+            p.el.style.visibility = 'visible';
+
+            // ease hover tilt + scale
+            p.tiltX += (p.targetTiltX - p.tiltX) * 0.12;
+            p.tiltY += (p.targetTiltY - p.tiltY) * 0.12;
+            p.hoverScale += (p.targetHoverScale - p.hoverScale) * 0.12;
+
+            const scale = p.depth * cam.z * p.hoverScale * (0.7 + 0.3 * introE);
+            let tf = `translate(${cx - p.w / 2}px, ${cy - p.h / 2}px) scale(${scale})`;
+            if (!p.isLabel) {
+                tf += ` perspective(1100px) rotateX(${p.tiltX}deg) rotateY(${p.tiltY}deg)`;
+            }
+            p.el.style.transform = tf;
+            p.el.style.opacity = p.isLabel ? introE : introE;
+            p.el.style.zIndex = Math.round(p.depth * 100);
         }
-    `;
-    document.head.appendChild(style);
-    
-    // Handle contact form submission (just prevent default for now)
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(contactForm);
-            const formObject = Object.fromEntries(formData.entries());
-            
-            // Show success message (in a real application, you would send this data to a server)
-            alert('Thank you for your message! This is a demo form, so no message was actually sent.');
-            
-            // Reset the form
-            contactForm.reset();
+
+        drawMinimap();
+        requestAnimationFrame(render);
+    };
+
+    /* ------------------------------------------------------------------
+       Hover tilt (panels lean toward the cursor, visionOS-style)
+       ------------------------------------------------------------------ */
+    contentPanels.forEach(p => {
+        p.el.addEventListener('pointermove', (e) => {
+            const r = p.el.getBoundingClientRect();
+            const nx = (e.clientX - r.left) / r.width - 0.5;
+            const ny = (e.clientY - r.top) / r.height - 0.5;
+            p.targetTiltY = nx * 5;
+            p.targetTiltX = -ny * 5;
         });
-    }
-    
-    // Add a subtle parallax effect to project cards
-    projectCards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const xPercent = x / rect.width - 0.5;
-            const yPercent = y / rect.height - 0.5;
-            
-            card.style.transform = `perspective(1000px) rotateY(${xPercent * 5}deg) rotateX(${yPercent * -5}deg)`;
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateY(0) rotateX(0)';
+        p.el.addEventListener('pointerenter', () => { p.targetHoverScale = 1.025; });
+        p.el.addEventListener('pointerleave', () => {
+            p.targetTiltX = 0;
+            p.targetTiltY = 0;
+            p.targetHoverScale = 1;
         });
     });
-    
-    // Initialize header behavior (transparent at top, solid on scroll)
-    const header = document.querySelector('header');
-    
-    const updateHeader = () => {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
+
+    /* ------------------------------------------------------------------
+       Drag to pan (with inertia)
+       ------------------------------------------------------------------ */
+    let drag = null;
+    let interacted = false;
+
+    const dismissHint = () => {
+        if (!interacted) {
+            interacted = true;
+            hint.classList.add('hidden');
+        }
+    };
+
+    viewport.addEventListener('pointerdown', (e) => {
+        if (e.button !== 0) return;
+        if (e.target.closest('a, button, .panel-scroll')) return;
+        drag = {
+            startX: e.clientX, startY: e.clientY,
+            camX: target.x, camY: target.y,
+            lastX: e.clientX, lastY: e.clientY, lastT: performance.now(),
+            vx: 0, vy: 0,
+        };
+        viewport.classList.add('dragging');
+        viewport.setPointerCapture(e.pointerId);
+        dismissHint();
+    });
+
+    viewport.addEventListener('pointermove', (e) => {
+        if (!drag) return;
+        target.x = drag.camX - (e.clientX - drag.startX) / cam.z;
+        target.y = drag.camY - (e.clientY - drag.startY) / cam.z;
+        const now = performance.now();
+        const dt = Math.max(1, now - drag.lastT);
+        drag.vx = (e.clientX - drag.lastX) / dt;
+        drag.vy = (e.clientY - drag.lastY) / dt;
+        drag.lastX = e.clientX;
+        drag.lastY = e.clientY;
+        drag.lastT = now;
+        clampTarget();
+    });
+
+    const endDrag = () => {
+        if (!drag) return;
+        if (!REDUCED_MOTION) {
+            // inertia: keep gliding in the direction of the throw
+            target.x -= drag.vx * 160 / cam.z;
+            target.y -= drag.vy * 160 / cam.z;
+            clampTarget();
+        }
+        drag = null;
+        viewport.classList.remove('dragging');
+    };
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+
+    /* ------------------------------------------------------------------
+       Wheel: two-finger scroll pans in any direction, pinch zooms
+       ------------------------------------------------------------------ */
+    viewport.addEventListener('wheel', (e) => {
+        // let inner scrollable lists scroll natively when they can
+        const sc = e.target.closest('.panel-scroll');
+        if (sc && !e.ctrlKey) {
+            const goingDown = e.deltaY > 0;
+            const canScroll = goingDown
+                ? sc.scrollTop + sc.clientHeight < sc.scrollHeight - 1
+                : sc.scrollTop > 0;
+            if (canScroll) return;
+        }
+        e.preventDefault();
+        dismissHint();
+        if (e.ctrlKey || e.metaKey) {
+            // trackpad pinch (or ctrl+wheel) → zoom
+            const d = Math.max(-30, Math.min(30, e.deltaY));
+            target.z *= Math.exp(-d * 0.01);
         } else {
-            header.classList.remove('scrolled');
+            target.x += e.deltaX / cam.z;
+            target.y += e.deltaY / cam.z;
         }
+        clampTarget();
+    }, { passive: false });
+
+    /* ------------------------------------------------------------------
+       Keyboard navigation
+       ------------------------------------------------------------------ */
+    window.addEventListener('keydown', (e) => {
+        if (e.target.matches('input, textarea')) return;
+        const step = 260 / cam.z;
+        switch (e.key) {
+            case 'ArrowLeft': target.x -= step; break;
+            case 'ArrowRight': target.x += step; break;
+            case 'ArrowUp': target.y -= step; break;
+            case 'ArrowDown': target.y += step; break;
+            case '+': case '=': target.z *= 1.15; break;
+            case '-': case '_': target.z /= 1.15; break;
+            case 'Home': target.x = 0; target.y = 0; target.z = 1; break;
+            default: return;
+        }
+        e.preventDefault();
+        dismissHint();
+        clampTarget();
+    });
+
+    /* ------------------------------------------------------------------
+       Dock navigation — fly the camera to a panel group
+       ------------------------------------------------------------------ */
+    const groups = {};
+    contentPanels.forEach(p => {
+        if (!p.group) return;
+        (groups[p.group] = groups[p.group] || []).push(p);
+    });
+
+    const flyToGroup = (name) => {
+        const g = groups[name];
+        if (!g || !g.length) return;
+        const minX = Math.min(...g.map(p => p.x - p.w / 2));
+        const maxX = Math.max(...g.map(p => p.x + p.w / 2));
+        const minY = Math.min(...g.map(p => p.y - p.h / 2));
+        const maxY = Math.max(...g.map(p => p.y + p.h / 2));
+        target.x = (minX + maxX) / 2;
+        target.y = (minY + maxY) / 2;
+        const fit = Math.min(vw / (maxX - minX + 160), vh / (maxY - minY + 220));
+        target.z = Math.max(ZOOM_MIN, Math.min(1, fit));
+        clampTarget();
+        dismissHint();
     };
-    
-    window.addEventListener('scroll', updateHeader);
-    updateHeader(); // Initial check
-    
-    // Add the header style for scrolled state
-    const headerStyle = document.createElement('style');
-    headerStyle.textContent = `
-        header.scrolled {
-            background-color: rgba(0, 0, 0, 0.3);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+
+    const dockButtons = [...dock.querySelectorAll('.dock-btn[data-target]')];
+    dockButtons.forEach(btn => {
+        btn.addEventListener('click', () => flyToGroup(btn.dataset.target));
+    });
+
+    document.getElementById('zoom-out-btn').addEventListener('click', () => {
+        // overview: fit the whole world
+        target.x = (bounds.minX + bounds.maxX) / 2;
+        target.y = (bounds.minY + bounds.maxY) / 2;
+        target.z = Math.max(ZOOM_MIN, Math.min(1,
+            Math.min(vw / (bounds.maxX - bounds.minX + 300), vh / (bounds.maxY - bounds.minY + 300))));
+        dismissHint();
+    });
+
+    document.querySelectorAll('[data-jump]').forEach(btn => {
+        btn.addEventListener('click', () => flyToGroup(btn.dataset.jump));
+    });
+
+    // highlight the dock button for the group nearest the camera
+    setInterval(() => {
+        let best = null, bestD = Infinity;
+        for (const name in groups) {
+            const g = groups[name];
+            const gx = g.reduce((s, p) => s + p.x, 0) / g.length;
+            const gy = g.reduce((s, p) => s + p.y, 0) / g.length;
+            const d = Math.hypot(gx - cam.x, gy - cam.y);
+            if (d < bestD) { bestD = d; best = name; }
         }
-    `;
-    document.head.appendChild(headerStyle);
-    
-    // Add active state to navigation based on scroll position
-    const updateActiveNav = () => {
-        const scrollPosition = window.scrollY + 150;
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-            
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
+        dockButtons.forEach(b => b.classList.toggle('active', b.dataset.target === best));
+    }, 400);
+
+    /* ------------------------------------------------------------------
+       Minimap
+       ------------------------------------------------------------------ */
+    const mmCtx = minimap.getContext('2d');
+    const MM_W = minimap.width, MM_H = minimap.height;
+    const mmScale = () => {
+        const pad = 350;
+        const wW = bounds.maxX - bounds.minX + pad * 2;
+        const wH = bounds.maxY - bounds.minY + pad * 2;
+        return {
+            s: Math.min(MM_W / wW, MM_H / wH),
+            ox: bounds.minX - pad,
+            oy: bounds.minY - pad,
+            wW, wH,
+        };
     };
-    
-    // Add the active nav style
-    const activeNavStyle = document.createElement('style');
-    activeNavStyle.textContent = `
-        .nav-item.active {
-            color: var(--text-primary);
+
+    const drawMinimap = () => {
+        const { s, ox, oy, wW, wH } = mmScale();
+        const dx = (MM_W - wW * s) / 2;
+        const dy = (MM_H - wH * s) / 2;
+        mmCtx.clearRect(0, 0, MM_W, MM_H);
+        // panels
+        for (const p of contentPanels) {
+            mmCtx.fillStyle = p.group === 'home' ? 'rgba(160,190,255,0.95)' : 'rgba(255,255,255,0.45)';
+            mmCtx.fillRect(
+                dx + (p.x - p.w / 2 - ox) * s,
+                dy + (p.y - p.h / 2 - oy) * s,
+                Math.max(2, p.w * s),
+                Math.max(2, p.h * s)
+            );
         }
-        
-        .nav-item.active::after {
-            width: 100%;
-        }
-    `;
-    document.head.appendChild(activeNavStyle);
-    
-    window.addEventListener('scroll', updateActiveNav);
-    updateActiveNav(); // Initial check
-    
-    // Add typing animation to the hero section subtitle
-    const animateTitle = () => {
-        const heroTitle = document.querySelector('.hero h1');
-        if (heroTitle) {
-            heroTitle.style.opacity = '1';
-        }
+        // viewport rect
+        const viewW = vw / cam.z, viewH = vh / cam.z;
+        mmCtx.strokeStyle = 'rgba(122,162,255,0.9)';
+        mmCtx.lineWidth = 1.2;
+        mmCtx.strokeRect(
+            dx + (cam.x - viewW / 2 - ox) * s,
+            dy + (cam.y - viewH / 2 - oy) * s,
+            viewW * s, viewH * s
+        );
     };
-    
-    // Trigger the animation after a short delay
-    setTimeout(animateTitle, 500);
-}); 
+
+    minimap.addEventListener('click', (e) => {
+        const r = minimap.getBoundingClientRect();
+        const { s, ox, oy, wW, wH } = mmScale();
+        const dx = (MM_W - wW * s) / 2;
+        const dy = (MM_H - wH * s) / 2;
+        target.x = (e.clientX - r.left - dx) / s + ox;
+        target.y = (e.clientY - r.top - dy) / s + oy;
+        clampTarget();
+        dismissHint();
+    });
+
+    /* ------------------------------------------------------------------
+       Cursor glow follows the pointer
+       ------------------------------------------------------------------ */
+    let glowX = vw / 2, glowY = vh / 2, glowTX = glowX, glowTY = glowY;
+    window.addEventListener('pointermove', (e) => {
+        glowTX = e.clientX;
+        glowTY = e.clientY;
+    });
+    setInterval(() => {
+        glowX += (glowTX - glowX) * 0.18;
+        glowY += (glowTY - glowY) * 0.18;
+        cursorGlow.style.transform = `translate3d(${glowX}px, ${glowY}px, 0)`;
+    }, 16);
+
+    /* ------------------------------------------------------------------
+       Boot
+       ------------------------------------------------------------------ */
+    const boot = () => {
+        measure();
+        computeBounds();
+        initStars();
+    };
+
+    boot();
+    window.addEventListener('load', boot);       // re-measure once images/fonts settle
+    window.addEventListener('resize', () => {
+        boot();
+        clampTarget();
+    });
+
+    requestAnimationFrame(render);
+})();
