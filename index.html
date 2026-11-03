@@ -81,7 +81,7 @@
                                     <h4>Stony Brook University, New York</h4>
                                 </div>
                             </div>
-                            <p class="timeline-date">August 2024 – May 2026</p>
+                            <p class="timeline-date">August 2024 – May 2026 | GPA: 3.63/4.0</p>
                             <p>Coursework: Distributed Systems, Visualization, Wireless and Mobile Networks</p>
                         </div>
                     </div>
@@ -113,6 +113,7 @@
                             <span class="skill-item"><i class="fab fa-python skill-icon"></i>Python</span>
                             <span class="skill-item"><i class="fab fa-golang skill-icon"></i>Go</span>
                             <span class="skill-item"><i class="fab fa-js skill-icon"></i>TypeScript</span>
+                            <span class="skill-item"><i class="fas fa-database skill-icon"></i>SQL</span>
                             <span class="skill-item"><i class="fas fa-terminal skill-icon"></i>Bash / Shell</span>
                         </div>
                     </div>
@@ -147,8 +148,18 @@
                             <span class="skill-item"><i class="fas fa-microchip skill-icon"></i>Computer Architecture</span>
                             <span class="skill-item"><i class="fab fa-docker skill-icon"></i>Docker</span>
                             <span class="skill-item"><i class="fas fa-dharmachakra skill-icon"></i>Kubernetes</span>
-                            <span class="skill-item"><i class="fab fa-aws skill-icon"></i>AWS (Fargate, S3, SQS)</span>
+                            <span class="skill-item"><i class="fab fa-aws skill-icon"></i>AWS (EC2, Fargate, S3, SQS)</span>
                             <span class="skill-item"><i class="fas fa-stream skill-icon"></i>Kafka</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Distributed Systems &amp; Performance</h3>
+                        <div class="skill-items">
+                            <span class="skill-item"><i class="fas fa-network-wired skill-icon"></i>Distributed Systems</span>
+                            <span class="skill-item"><i class="fas fa-bolt skill-icon"></i>Event-Driven Architecture</span>
+                            <span class="skill-item"><i class="fas fa-layer-group skill-icon"></i>Caching</span>
+                            <span class="skill-item"><i class="fas fa-gauge-high skill-icon"></i>API Performance Optimization</span>
+                            <span class="skill-item"><i class="fas fa-tachometer-alt skill-icon"></i>JMeter</span>
                         </div>
                     </div>
                     <div class="skill-category">
@@ -157,10 +168,13 @@
                             <span class="skill-item"><i class="fas fa-bolt skill-icon"></i>FastAPI</span>
                             <span class="skill-item"><i class="fab fa-python skill-icon"></i>Django</span>
                             <span class="skill-item"><i class="fas fa-network-wired skill-icon"></i>REST APIs</span>
+                            <span class="skill-item"><i class="fas fa-cubes skill-icon"></i>Microservices</span>
                             <span class="skill-item"><i class="fas fa-database skill-icon"></i>SQL</span>
                             <span class="skill-item"><i class="fas fa-leaf skill-icon"></i>MongoDB</span>
+                            <span class="skill-item"><i class="fas fa-bolt skill-icon"></i>Redis</span>
                             <span class="skill-item"><i class="fas fa-database skill-icon"></i>SQLite</span>
                             <span class="skill-item"><i class="fas fa-search skill-icon"></i>Elasticsearch</span>
+                            <span class="skill-item"><i class="fas fa-envelope-open-text skill-icon"></i>SQS</span>
                         </div>
                     </div>
                     <div class="skill-category">
@@ -194,7 +208,7 @@
                             <p class="timeline-date">May 2025 – August 2025</p>
                             <div class="experience-story">
                                 <p>I spent the summer giving a multi-tenant internal finance platform something it had never had: a safety net. Starting from a blank file, I architected a Cypress + TypeScript validation framework around the Page Object Model and shared workflow libraries, and grew it to <strong>85% end-to-end coverage across 276 test cases</strong> spanning both UI and API flows.</p>
-                                <p>The trickiest piece was getting past Amazon's internal SSO — so I built an automated authentication utility that let the entire suite run fully headless, with no human babysitting the pipeline. From there I wired everything into <strong>CI/CD on AWS Fargate</strong>, deploying and validating across alpha, beta, and gamma environments. By the end, a regression cycle that used to eat <strong>five hours ran in forty-five minutes</strong>, and careful defect triage and root-cause analysis kept the false-failure noise low enough that people actually trusted the results.</p>
+                                <p>The trickiest piece was getting past Amazon's internal SSO - so I built an automated authentication utility that let the entire suite run fully headless, with no human babysitting the pipeline. From there I wired everything into <strong>CI/CD on AWS Fargate</strong>, deploying and validating across alpha, beta, and gamma environments. By the end, a regression cycle that used to eat <strong>five hours ran in forty-five minutes</strong>, and careful defect triage and root-cause analysis kept the false-failure noise low enough that people actually trusted the results.</p>
                             </div>
                         </div>
                     </div>
@@ -210,8 +224,9 @@
                             </div>
                             <p class="timeline-date">January 2023 – August 2024</p>
                             <div class="experience-story">
-                                <p>Enphase is where I learned to make systems watch themselves. I built an end-to-end observability pipeline that pulled <strong>Datadog APM</strong> metrics into SQL and surfaced them as Grafana latency dashboards — and when an API started to degrade, a Python job quietly opened the Jira ticket before anyone noticed. Triage that once took <strong>a day or more dropped to under twenty minutes</strong>.</p>
-                                <p>I also have a soft spot for deleting manual work: I collapsed three hand-triggered Jenkins jobs into a single automated pipeline using Groovy and cron scheduling, wrote AWS-CLI shell scripts that pushed test messages through <strong>Kafka</strong> to confirm they landed correctly in MongoDB, and expanded our <strong>JMeter</strong> coverage by 70% by onboarding more than 300 endpoints for load and performance testing.</p>
+                                <p>Enphase is where I learned to make backends fast and make them watch themselves. On the performance side, I introduced <strong>Redis caching</strong> into a backend microservice to cut repeated database queries, dropping API <strong>p95 latency from 450ms to under 200ms</strong>. I also designed and shipped a production <strong>Kafka-to-MongoDB messaging pipeline</strong> for our microservices, enabling asynchronous message processing and durable data persistence. These services ran on <strong>AWS EC2</strong>, where I leaned on production monitoring to track API latency and investigate service degradation.</p>
+                                <p>Alongside that, I built an end-to-end observability pipeline that pulled <strong>Datadog APM</strong> metrics into SQL and surfaced them as Grafana latency dashboards - and when an API started to degrade, a Python job quietly opened the Jira ticket before anyone noticed. Triage that once took <strong>a day or more dropped to under twenty minutes</strong>.</p>
+                                <p>I also have a soft spot for deleting manual work: I collapsed three hand-triggered Jenkins jobs into a single automated pipeline using Groovy and cron scheduling, and expanded our <strong>JMeter</strong> coverage by 70% by onboarding more than 300 endpoints for load and performance testing.</p>
                             </div>
                         </div>
                     </div>
@@ -227,7 +242,7 @@
                             </div>
                             <p class="timeline-date">May 2021 – October 2021</p>
                             <div class="experience-story">
-                                <p>This is where I first shipped something people actually tapped through every day. I built the iOS front-end in Storyboard, wired up Google Firebase on the backend, and folded in the Google Maps SDK — a feature that lifted user engagement by around <strong>25%</strong>. Along the way I led a round of front-end design polish that made the app feel noticeably more consistent across devices. It was my early, formative taste of turning ideas into a real, running app.</p>
+                                <p>This is where I first shipped something people actually tapped through every day. I built the iOS front-end in Storyboard, wired up Google Firebase on the backend, and folded in the Google Maps SDK - a feature that lifted user engagement by around <strong>25%</strong>. Along the way I led a round of front-end design polish that made the app feel noticeably more consistent across devices. It was my early, formative taste of turning ideas into a real, running app.</p>
                             </div>
                         </div>
                     </div>
@@ -239,6 +254,28 @@
             <div class="container">
                 <h2 class="section-title">Projects</h2>
                 <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Argus Autonomous QA Engine">
+                        </div>
+                        <div class="project-content">
+                            <h3>Argus: Autonomous QA Engine</h3>
+                            <p>An on-call SDET that never sleeps. The moment CI goes red, Argus watches an end-to-end Playwright suite, works out why each test failed, and takes the action the cause calls for: it heals tests that have drifted, reproduces and fixes real product bugs, quarantines flaky tests, and escalates anything it isn't sure about. Deterministic signals catch flakes and environment failures before any LLM runs, so a single triage pass clusters the rest by root cause. Every patch is applied in an isolated git worktree and has to pass repeatedly with no regressions before it ships as a PR, while a policy layer maps files to risk zones so payroll math needs two human approvals and never auto-merges. Across a 12-scenario benchmark it resolved <strong>11 of 11</strong>, fixing <strong>6/6 bugs</strong> and healing <strong>3/3 drifted tests</strong> with zero false reports for about <strong>$0.37 a run</strong>.</p>
+                            <div class="project-tags">
+                                <span class="tag">TypeScript</span>
+                                <span class="tag">Playwright</span>
+                                <span class="tag">Multi-Agent AI</span>
+                                <span class="tag">Claude</span>
+                                <span class="tag">Node.js</span>
+                                <span class="tag">CI/CD</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/Harsh4601/Argus" target="_blank" class="project-link">
+                                    <i class="fab fa-github"></i> View on GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="project-card">
                         <div class="project-image">
                             <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Insurance Policy RAG + NEMSIS Pipeline">
@@ -253,6 +290,11 @@
                                 <span class="tag">OpenAI</span>
                                 <span class="tag">Whisper</span>
                                 <span class="tag">RAG</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/Harsh4601/insurance_policy_rag" target="_blank" class="project-link">
+                                    <i class="fab fa-github"></i> View on GitHub
+                                </a>
                             </div>
                         </div>
                     </div>
